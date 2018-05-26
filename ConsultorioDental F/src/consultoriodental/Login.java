@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -50,7 +51,11 @@ public static String url="jdbc:mysql://localhost:3306/clinicadental?user=root&pa
         conectar();
         }
     public void conectar(){
-        try{
+        File folder = new File("C:\\Users\\"+System.getProperty("user.name")+"\\Documents\\Expedientes_Clinica");
+        if (!folder.exists()) {
+            folder.mkdir();
+        }
+        try {
             Class.forName("com.mysql.jdbc.Driver");
             co=DriverManager.getConnection(url);
             Statement stm=co.createStatement();                       

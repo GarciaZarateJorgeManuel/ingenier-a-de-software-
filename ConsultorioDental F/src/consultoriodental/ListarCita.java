@@ -6,6 +6,14 @@
 package consultoriodental;
 
 import java.awt.BorderLayout;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -13,16 +21,41 @@ import java.awt.BorderLayout;
  */
 public class ListarCita extends javax.swing.JInternalFrame {
 
+    String url="jdbc:mysql://localhost:3306/clinicadental?user=root&password=panda101";
     /**
      * Creates new form ListarCita
      */
     public ListarCita() {
         initComponents();
             setTitle("Lista de citas ");
+            setLocked(true);
           FondoPanel fp  = new FondoPanel("/fondo/fondoverde.jpg");
         fp.setSize(794, 509);
+        ImprimeTabla im= new ImprimeTabla();
+        SimpleDateFormat fecha = new SimpleDateFormat("dd-MM-yyyy");
+        Date fechaactual = new Date();
+        lDia.setText(fecha.format(fechaactual.getTime()));
+        mostrarDatos("Select * from paciente p inner join cita c on p.id_paciente=c.id_paciente"
+                        + " where c.fecha_cita = '" + fecha.format(fechaactual.getTime()) + "'",im);
+        tablaCitas.setModel(im);        
         this.add(fp,BorderLayout.CENTER);
         this.pack();
+    }
+    private boolean locked = false;
+
+    @Override
+    public void reshape(int x, int y, int width, int height) {
+        if (!locked) {
+            super.reshape(x, y, width, height);
+        }
+    }
+
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
     }
 
     /**
@@ -36,11 +69,13 @@ public class ListarCita extends javax.swing.JInternalFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaCitas = new javax.swing.JTable();
+        lDia = new javax.swing.JLabel();
 
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel1.setText("Citas del dia");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaCitas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -51,38 +86,68 @@ public class ListarCita extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaCitas);
+
+        lDia.setFont(new java.awt.Font("Ebrima", 1, 14)); // NOI18N
+        lDia.setText("12/07/2018");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(51, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 638, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(75, 75, 75))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 740, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(342, 342, 342)
-                .addComponent(jLabel1)
+                .addGap(329, 329, 329)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lDia)
+                    .addComponent(jLabel1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1)
-                .addGap(71, 71, 71))
+                .addComponent(lDia)
+                .addGap(26, 26, 26)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
 
+    public List<String[]> mostrarDatos(String sq,ImprimeTabla im){
+        List<String[]> datos = new ArrayList<String[]>();
+        try{ 
+            Class.forName("org.apache.derby.jdbc.ClientDriver"); 
+            Connection con =(Connection)DriverManager.getConnection(url);
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sq);
+            int cont = 0;
+            while(rs.next()){
+                String dat[] = new String[3];
+                dat[0] = String.valueOf(rs.getString("nombre"))+" "+String.valueOf(rs.getString("apellido_Paterno"))+" "+String.valueOf(rs.getString("apellido_materno"));//nombre
+                        dat[1] =String.valueOf(rs.getString("hora_cita"));//apMaterno 
+                        dat[3] = String.valueOf(rs.getString("motivo"));//apMaterno 
+                datos.add(dat);
+                im.datos.add(dat);
+                
+            }
+        }catch(Exception e){
+            System.out.println("Error al listar "+e);
+        }
+        return datos;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lDia;
+    private javax.swing.JTable tablaCitas;
     // End of variables declaration//GEN-END:variables
 }

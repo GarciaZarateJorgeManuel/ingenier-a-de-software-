@@ -1,16 +1,20 @@
-
 package consultoriodental;
+
 import java.awt.BorderLayout;
 import java.awt.Image;
+import java.awt.Point;
 import java.beans.PropertyVetoException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,40 +22,59 @@ import javax.swing.ImageIcon;
  */
 public class MenuPrincipal extends javax.swing.JFrame {
 
-  
+    ArrayList<String> nameExp, rutaExp;
+    int actual=0;
+
     public MenuPrincipal() {
         initComponents();
-        
-   
+        vaciarList();
         setLocationRelativeTo(this);
         setTitle("Menu principal");
-          FondoPanel fp  = new FondoPanel("/fondo/fon11.png");
-        fp.setSize(1062,656);
-      
-        this.add(fp,BorderLayout.CENTER);        
-        
-        FondoPanel fpl  = new FondoPanel("/fondo/r.png");
-        fpl.setSize(110,125);
-        logo.add(fpl,BorderLayout.CENTER);
+        FondoPanel fp = new FondoPanel("/fondo/fon11.png");
+        fp.setSize(1062, 656);
+
+        this.add(fp, BorderLayout.CENTER);
+
+        FondoPanel fpl = new FondoPanel("/fondo/r.png");
+        fpl.setSize(110, 125);
+        logo.add(fpl, BorderLayout.CENTER);
         logo.add(fpl);
-        
-        this.pack();       
+
+        this.pack();
         escritorio.setVisible(false);
-        
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                close();
+            }
+        });
+
     }
-     private boolean locked = false;
-@Override
-public void reshape(int x, int y, int width, int height) {
-if (!locked) {
-super.reshape(x, y, width, height);}
-}
-public boolean isLocked() {return locked;}
-public void setLocked(boolean locked) {this.locked = locked;}
+    private boolean locked = false;
+
+    @Override
+    public void reshape(int x, int y, int width, int height) {
+        if (!locked) {
+            super.reshape(x, y, width, height);
+        }
+    }
+
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         agregar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         consultar = new javax.swing.JButton();
@@ -225,76 +248,122 @@ public void setLocked(boolean locked) {this.locked = locked;}
     }// </editor-fold>//GEN-END:initComponents
 
     private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
-
-        escritorio.removeAll();
-        Agregar_cita ac = new Agregar_cita();
-       ac = new  Agregar_cita();
-      escritorio.add(ac);
-       ac.show();
-       escritorio.setVisible(true);
-       revalidate();
-       repaint();
+        if (actual != 1) {
+            actual = 1;
+            CopiPasteDoc();
+            escritorio.removeAll();
+            Agregar_cita ac = new Agregar_cita(true, this);
+            escritorio.add(ac);
+            ac.show();
+            escritorio.setVisible(true);
+            revalidate();
+            repaint();
+        }
     }//GEN-LAST:event_agregarActionPerformed
 
     private void consultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarActionPerformed
-     escritorio.removeAll();
-        BuscarCita bc = new BuscarCita();
-     bc= new  BuscarCita();
-      escritorio.add(bc);
-     bc.show();
-       escritorio.setVisible(true);
-       revalidate();
-       repaint();
+        if (actual != 2) {
+            actual = 2;
+            CopiPasteDoc();
+            escritorio.removeAll();
+            BuscarCita bc = new BuscarCita(true, this);
+            escritorio.add(bc);
+            bc.show();
+            escritorio.setVisible(true);
+            revalidate();
+            repaint();
+        }
     }//GEN-LAST:event_consultarActionPerformed
 
     private void cambiarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambiarUsuarioActionPerformed
-         dispose();
-        Login l= new Login(); 
+        CopiPasteDoc();
+        dispose();
+        Login l = new Login();
         l.setVisible(true);
     }//GEN-LAST:event_cambiarUsuarioActionPerformed
 
     private void agregarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarPacienteActionPerformed
-          escritorio.removeAll();
-          AgregarPaciente ap = new AgregarPaciente();
-       ap = new AgregarPaciente();
-      escritorio.add(ap);
-      ap.show();
-       escritorio.setVisible(true);
-       revalidate();
-       repaint();
+        if (actual != 3) {
+            actual = 3;
+            CopiPasteDoc();
+            escritorio.removeAll();
+            AgregarPaciente ap = new AgregarPaciente(true, this);
+            escritorio.add(ap);
+            ap.show();
+            escritorio.setVisible(true);
+            revalidate();
+            repaint();
+        }
     }//GEN-LAST:event_agregarPacienteActionPerformed
 
     private void buscarPAcienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarPAcienteActionPerformed
-          escritorio.removeAll();
-          BuscarPaciente bp = new BuscarPaciente();
-      bp = new BuscarPaciente();
-       escritorio.add(bp);
-      bp.show();
-       escritorio.setVisible(true);
-       revalidate();
-       repaint();
+        if (actual != 4) {
+            actual = 4;
+            escritorio.removeAll();
+            BuscarPaciente bp = new BuscarPaciente(true, this);
+            escritorio.add(bp);
+            bp.show();
+            escritorio.setVisible(true);
+            revalidate();
+            repaint();
+        }
     }//GEN-LAST:event_buscarPAcienteActionPerformed
 
     private void listarCitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarCitasActionPerformed
-                                                
-        escritorio.removeAll();
-        ListarCita lc =new ListarCita();
-      lc= new  ListarCita();
-       escritorio.add(lc);
-       lc.show();
-       escritorio.setVisible(true);
-       revalidate();
-       repaint();
-        
+        if (actual != 5) {
+            actual = 5;
+            CopiPasteDoc();
+            escritorio.removeAll();
+            ListarCita lc = new ListarCita();
+            escritorio.add(lc);
+            lc.show();
+            escritorio.setVisible(true);
+            revalidate();
+            repaint();
+        }
+
     }//GEN-LAST:event_listarCitasActionPerformed
-   
-    
+
+    public void agregarListaDoc(String NameExp, String rutaExp) {
+        nameExp.add(NameExp);
+        this.rutaExp.add(rutaExp);
+    }
+
+    private void CopiPasteDoc() {
+        if (!nameExp.isEmpty() && !rutaExp.isEmpty()) {
+            try {
+                for (int i = 0; i < nameExp.size(); i++) {
+                    String[] command = {"cmd", "/c", "copy " + rutaExp.get(i) + " " + "C:\\Users\\" + System.getProperty("user.name") + "\\Documents\\Expedientes_Clinica\\" + nameExp.get(i) + "_Expediente.docx" + "", ""};
+                    Process p = Runtime.getRuntime().exec(command);
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    private void vaciarList() {
+        nameExp = new ArrayList<String>();
+        rutaExp = new ArrayList<String>();
+    }
+
+    private void close() {
+        if (JOptionPane.showConfirmDialog(rootPane, "¿ REALMENTE DESEA SALIR ?",
+                "Salir del sistema", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+            CopiPasteDoc();
+            System.exit(0);
+        }
+    }
+    public Point localizacion(){
+        return escritorio.getLocation();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregar;
     private javax.swing.JButton agregarPaciente;
     private javax.swing.JButton buscarPAciente;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JButton cambiarUsuario;
     private javax.swing.JButton consultar;
     private javax.swing.JDesktopPane escritorio;

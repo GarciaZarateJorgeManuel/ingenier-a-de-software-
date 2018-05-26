@@ -6,6 +6,9 @@
 package consultoriodental;
 
 import java.awt.BorderLayout;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -16,6 +19,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -29,24 +34,65 @@ public class BuscarPaciente extends javax.swing.JInternalFrame {
     ArrayList<Object[]> datos;
     DefaultListModel model= new DefaultListModel();
     String url ="jdbc:mysql://localhost:3306/clinicadental?user=root&password=panda101";
+    String nomExp;
+    boolean isAdmin;
+    MenuPrincipal mp;
+    MenuSecretaria ms;
     
-    public BuscarPaciente() {
+    public BuscarPaciente(boolean permisos,JFrame menu) {
         initComponents();
+        bVerExp.setEnabled(false);
+        isAdmin=permisos;
+        if(permisos){
+            mp=(MenuPrincipal)menu;
+        }else{
+            ms=(MenuSecretaria)menu;
+        }
+        checarPermiss();
          setTitle("Buscar paciente ");
           FondoPanel fp  = new FondoPanel("/fondo/fondoverde.jpg");
         fp.setSize(794, 509);
         this.add(fp,BorderLayout.CENTER);
+        this.setLocked(true);
         rBuqueda.setModel(model);
-        model.add(0, "NOMBRE       APELLIDO PAT       APELLIDO MAT");
+        model.add(0, "NOMBRE            APELLIDO PAT           APELLIDO MAT");
         this.pack();
     }
+    private boolean locked = false;
 
+    @Override
+    public void reshape(int x, int y, int width, int height) {
+        if (!locked) {
+            super.reshape(x, y, width, height);
+        }
+    }
+
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
+
+    public void checarPermiss(){
+        if(!isAdmin){
+            this.remove(bVerExp);            
+        }
+    }
     public void agregarDatosList(ArrayList<Object[]> datos){
         String aux="";
         for (int i=0;i<datos.size();i++) {
             aux=(String) datos.get(i)[1]+"          "+datos.get(i)[2]+"        "+datos.get(i)[3];
             model.addElement(aux);
         }
+    }
+    private void clearResult(){
+        model.removeAllElements();
+        model.add(0, "NOMBRE     APELLIDO PAT     APELLIDO MAT");    
+        rBuqueda.setSelectedIndex(0);  
+        rMostrar.setText("");
+        
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -66,8 +112,7 @@ public class BuscarPaciente extends javax.swing.JInternalFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         rBuqueda = new javax.swing.JList<>();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        bVerExp = new javax.swing.JButton();
 
         rMostrar.setEditable(false);
         rMostrar.setColumns(20);
@@ -98,14 +143,12 @@ public class BuscarPaciente extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Detalles:");
 
-        jButton1.setText("actualizar expediente");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        bVerExp.setText("Abrir Expediente");
+        bVerExp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                bVerExpActionPerformed(evt);
             }
         });
-
-        jButton2.setText("ver expediente");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -124,15 +167,10 @@ public class BuscarPaciente extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(bVerExp, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(41, 41, 41))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2)
-                .addGap(106, 106, 106))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -154,27 +192,31 @@ public class BuscarPaciente extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(54, 54, 54)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(43, 43, 43))
+                .addGap(59, 59, 59)
+                .addComponent(bVerExp)
+                .addGap(38, 38, 38))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void bBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBuscarActionPerformed
-        
-        datos = new ArrayList<>();
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection co=DriverManager.getConnection(url);
+        if (!iBuscar.getText().isEmpty()) {
+            datos = new ArrayList<>();
+            clearResult();
+            if(isAdmin){
+               bVerExp.setEnabled(false);
+           }
             
-            Statement stm = co.createStatement();
-            ResultSet rs = stm.executeQuery("Select * from paciente where nombre like '%"+iBuscar.getText()+"%' or apellido_Paterno like '%"+iBuscar.getText()+"%' or apellido_materno like '%"+iBuscar.getText()+"%'");
-            while (rs.next()) {
-                    String dat[] = new String[12];
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection co = DriverManager.getConnection(url);
+
+                Statement stm = co.createStatement();
+                ResultSet rs = stm.executeQuery("Select * from paciente p inner join expediente_medico m "
+                        + "on p.id_paciente=m.id_paciente where p.nombre like '%" + iBuscar.getText() + "%' or p.apellido_Paterno like '%" + iBuscar.getText() + "%' or p.apellido_materno like '%" + iBuscar.getText() + "%'");
+                while (rs.next()) {
+                    String dat[] = new String[13];
                     dat[0] = String.valueOf(rs.getInt("id_paciente"));//id_paciente
                     dat[1] = String.valueOf(rs.getString("nombre"));//nombre
                     dat[2] = String.valueOf(rs.getString("apellido_Paterno"));//apPaterno
@@ -187,19 +229,28 @@ public class BuscarPaciente extends javax.swing.JInternalFrame {
                     dat[9] = String.valueOf(rs.getString("estado"));
                     dat[10] = String.valueOf(rs.getString("telefono"));
                     dat[11] = String.valueOf(rs.getString("email"));
-                    
+
+                    dat[12] = String.valueOf(rs.getString("fecha_expedicion"));
+
                     datos.add(dat);
-            }                
+                }
                 agregarDatosList(datos);
-            
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(BuscarPaciente.class.getName()).log(Level.SEVERE, null, ex);
-        }
+                rs.close();
+                    co.close();
+
+            } catch (ClassNotFoundException | SQLException ex) {
+                Logger.getLogger(BuscarPaciente.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else
+            JOptionPane.showMessageDialog(null,"ingrese un nombre o apellido para realizar la busqueda");
     }//GEN-LAST:event_bBuscarActionPerformed
 
     private void rBuquedaValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_rBuquedaValueChanged
-        if(rBuqueda.getSelectedIndex()!=0){
+        if(rBuqueda.getSelectedIndex()>0){
            int auxindex=rBuqueda.getSelectedIndex()-1;
+           if(isAdmin){
+               bVerExp.setEnabled(true);
+           }
            
            String datosss="";
             datosss+="NOMBRE: "+datos.get(auxindex)[1] +"\n";
@@ -213,22 +264,53 @@ public class BuscarPaciente extends javax.swing.JInternalFrame {
             datosss+="CODIGO POSTAL: "+datos.get(auxindex)[8] +"\n";
             datosss+="TELEFONO: "+datos.get(auxindex)[10] +"\n";
             datosss+="CORREO ELECTRONICO: "+datos.get(auxindex)[11] +"\n---------------------------------------------------\n";
-
+            nomExp=datos.get(auxindex)[1] +"_"+datos.get(auxindex)[2] +"_"+datos.get(auxindex)[3]+datos.get(auxindex)[12];
         rMostrar.setText(datosss);
            
        }        
     }//GEN-LAST:event_rBuquedaValueChanged
+    
+    private void bVerExpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVerExpActionPerformed
+        if (rMostrar.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "SELECCIONE UN PACIENTE PRIMERO.");
+        } else {
+            File ruta=null;
+            try {
+                ruta=new File("RepositorioExpedientes\\"+ nomExp +".docx");
+                mp.agregarListaDoc(ruta.getAbsolutePath(),nomExp);
+                
+                moverHide();
+                        //"C:\\Users\\"+System.getProperty("user.name")+"\\Documents\\Expedientes_Clinica\\"+ nomExp+ "_Expediente.docx");
+                Desktop.getDesktop().open(ruta);
+            } catch (IOException ex) {
+                System.out.println("Please open a browser and go to " + ruta.getAbsolutePath());
+            }
+        }
+    }//GEN-LAST:event_bVerExpActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
+    public void moverHide(){
+        try {
+            //Process p1=Runtime.getRuntime().exec("cmd /c move /Y " + '"'+"C:\\Users\\yorch\\Documents\\Expedientes_Clinica\\"+ nomExp+ "_Expediente.docx"+'"'+"  "+
+            //        '"'+" C:\\Users\\yorch\\Documents\\Expedientes_Clinica\\Edicion Anterior"+'"');
+            //p1.waitFor();
+            //System.out.println("cmd /c move /Y " + '"'+"C:\\Users\\yorch\\Documents\\Expedientes_Clinica\\"+ nomExp+ "_Expediente.docx"+'"'+"  "+
+             //       '"'+"C:\\Users\\yorch\\Documents\\Expedientes_Clinica\\.Edicion Anterior"+'"');
+            Process p = Runtime.getRuntime().exec("attrib +h " + "C:\\Users\\"+System.getProperty("user.name")+"\\Documents\\Expedientes_Clinica\\"+ nomExp+ "_Expediente.docx");
+            p.waitFor();
+        } catch (IOException ex) {
+            Logger.getLogger(BuscarPaciente.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("es en hiden");
+        } catch (InterruptedException ex) {
+            Logger.getLogger(BuscarPaciente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bBuscar;
+    private javax.swing.JButton bVerExp;
     private javax.swing.JTextField iBuscar;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

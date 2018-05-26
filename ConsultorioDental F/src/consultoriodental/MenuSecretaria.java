@@ -6,8 +6,10 @@
 package consultoriodental;
 
 import java.awt.BorderLayout;
+import java.awt.Point;
 import java.sql.Connection;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -35,6 +37,12 @@ public class MenuSecretaria extends javax.swing.JFrame {
         logo.add(fpl);
         this.pack();    
           escritorioS.setVisible(false);
+          addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                close();
+            }
+        });
     }
 
     /**
@@ -196,7 +204,7 @@ public class MenuSecretaria extends javax.swing.JFrame {
 
     private void consultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarActionPerformed
         escritorioS.removeAll();
-        BuscarCita bc = new BuscarCita();
+        BuscarCita bc = new BuscarCita(false,this);
       //  escritorioS.add(cc);
        // cc.show();
         revalidate();
@@ -211,8 +219,7 @@ public class MenuSecretaria extends javax.swing.JFrame {
 
     private void nuevoPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoPacienteActionPerformed
       escritorioS.removeAll();
-          AgregarPaciente ap = new AgregarPaciente();
-       ap = new AgregarPaciente();
+          AgregarPaciente ap = new AgregarPaciente(false,this);
       escritorioS.add(ap);
       ap.show();
        escritorioS.setVisible(true);
@@ -226,8 +233,23 @@ public class MenuSecretaria extends javax.swing.JFrame {
 
     private void nuevoPaciente5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoPaciente5ActionPerformed
         // TODO add your handling code here:
+        escritorioS.removeAll();
+          BuscarPaciente bp = new BuscarPaciente(false,this);
+       escritorioS.add(bp);
+      bp.show();
+       escritorioS.setVisible(true);
+       revalidate();
+       repaint();
     }//GEN-LAST:event_nuevoPaciente5ActionPerformed
 
+    private void close(){
+        if (JOptionPane.showConfirmDialog(rootPane, "¿ REALMENTE DESEA SALIR ?",
+                "Salir del sistema", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION)
+            System.exit(0);
+    } 
+    public Point localizacion(){
+        return escritorioS.getLocation();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cambiarUsuario;

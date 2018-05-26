@@ -5,6 +5,8 @@ import java.awt.BorderLayout;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
+import java.net.Socket;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -18,7 +20,11 @@ import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JDesktopPane;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.WindowConstants;
 
 /**
  *
@@ -28,9 +34,19 @@ public class Agregar_cita extends javax.swing.JInternalFrame {
 
     String url = "jdbc:mysql://localhost:3306/clinicadental?user=root&password=panda101";
     int auxID = 0;
+    MenuPrincipal mp;
+    MenuSecretaria ms;
+    boolean isAdmin;
 
-    public Agregar_cita() {
+    public Agregar_cita(boolean permisos,JFrame menu) {
         initComponents();
+        if(permisos){
+            mp=(MenuPrincipal)menu;
+            isAdmin=true;
+        }else{
+            ms=(MenuSecretaria)menu;
+            isAdmin=false;
+        }
         ManejadorTecla mt = new ManejadorTecla();
         setTitle("Agregar nueva cita ");
         FondoPanel fp = new FondoPanel("/fondo/fondoverde.jpg");
@@ -38,6 +54,7 @@ public class Agregar_cita extends javax.swing.JInternalFrame {
         this.add(fp, BorderLayout.CENTER);
         //  this.setBounds(0, 0, 200, 200);
         this.setLocked(true);
+        iNombre.setFocusable(true);
         this.pack();
 
     }
@@ -75,6 +92,7 @@ public class Agregar_cita extends javax.swing.JInternalFrame {
         min.setTime(date);
         min.set(Calendar.MONTH, mes - 1);
         min.set(Calendar.DATE, dia);
+        System.out.println("fecha actual : "+min.getTime().toString());
         return min.getTime();
     }
 
@@ -93,6 +111,16 @@ public class Agregar_cita extends javax.swing.JInternalFrame {
 
     public void setLocked(boolean locked) {
         this.locked = locked;
+    }
+
+    private void EnviarMailConfirmacion(String to) {
+        String para=to;
+        String Mensage="Querido usuario:  "+iNombre+".\n su cita se a agendado para el dia: "+iFecha.getDate().getTime()+""
+                    + "\n a la hora: "+iHora.getSelectedItem().toString()+".\nGracias por su preferencia.";
+        String Asunto="CITA AGENDADA EXITOSAMENTE";
+        EnviarMail env = new EnviarMail(para, Mensage, Asunto);
+        env.SendMail();        
+    
     }
 
     private class ManejadorTecla implements KeyListener {//clase interna
@@ -124,6 +152,7 @@ public class Agregar_cita extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         grupoMotivo = new javax.swing.ButtonGroup();
+        jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -143,6 +172,9 @@ public class Agregar_cita extends javax.swing.JInternalFrame {
         iApPaterno = new javax.swing.JTextField();
         iApMaterno = new javax.swing.JTextField();
         iFecha = new com.toedter.calendar.JDateChooser();
+
+        jRadioButtonMenuItem1.setSelected(true);
+        jRadioButtonMenuItem1.setText("jRadioButtonMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
 
@@ -164,6 +196,11 @@ public class Agregar_cita extends javax.swing.JInternalFrame {
         jButton2.setBackground(new java.awt.Color(168, 202, 235));
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton2.setText("Cancelar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         grupoMotivo.add(dolormuela);
         dolormuela.setSelected(true);
@@ -192,14 +229,16 @@ public class Agregar_cita extends javax.swing.JInternalFrame {
 
         jLabel7.setText("Motivo:");
 
-        iNombre.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        iNombre.setText("lopez");
+        iNombre.setHorizontalAlignment(javax.swing.JTextField.LEFT);
 
-        iApPaterno.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        iApPaterno.setText("lopez");
+        iApPaterno.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        iApPaterno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                iApPaternoActionPerformed(evt);
+            }
+        });
 
-        iApMaterno.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        iApMaterno.setText("lopez");
+        iApMaterno.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         iApMaterno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 iApMaternoActionPerformed(evt);
@@ -221,41 +260,45 @@ public class Agregar_cita extends javax.swing.JInternalFrame {
                 .addComponent(jButton2)
                 .addGap(56, 56, 56))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(iHora, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(iFecha, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
-                        .addComponent(iNombre)))
+                .addGap(67, 67, 67)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(98, 98, 98)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel7)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(dolormuela)
-                                .addComponent(ajuste)
-                                .addComponent(ajuste3)))
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(iFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(iNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(iApPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(iApMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(44, 44, 44)
+                                .addComponent(jLabel7))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(iHora, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(102, 102, 102)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(dolormuela)
+                            .addComponent(ajuste)
+                            .addComponent(ajuste3))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(limpieza)
                             .addComponent(ajuste2)
-                            .addComponent(ajuste1)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(iApPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36)
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(iApMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(ajuste1))))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -268,29 +311,31 @@ public class Agregar_cita extends javax.swing.JInternalFrame {
                     .addComponent(iNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(iApPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(iApMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(iFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addComponent(jLabel7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(limpieza))
+                        .addGap(26, 26, 26)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(iFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(iHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4)))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(jLabel7)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(dolormuela)
-                            .addComponent(ajuste2)
-                            .addComponent(iHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
+                            .addComponent(ajuste2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(ajuste)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(ajuste)
+                            .addComponent(limpieza))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(ajuste3)
                             .addComponent(ajuste1))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 155, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(agregar)
                     .addComponent(jButton2))
@@ -301,6 +346,10 @@ public class Agregar_cita extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
+        if(iNombre.getText().isEmpty()||iApPaterno.getText().isEmpty()||iApMaterno.getText().isEmpty()||iFecha.getDate()==null){
+            JOptionPane.showMessageDialog(this, "RELLENE TODOS LOS CAMPOS ANTES DE CONTINUAR");
+        }else{
+            String Correo="";
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection co = DriverManager.getConnection(url);
@@ -309,12 +358,15 @@ public class Agregar_cita extends javax.swing.JInternalFrame {
             ResultSet rs;
             try {
                 rs = stm.executeQuery("Select * from paciente where nombre='" + iNombre.getText() + "' and apellido_Paterno='" + iApPaterno.getText() + "'and apellido_materno='" + iApMaterno.getText() + "'");
+                
                 while (rs.next()) {
                     auxID = rs.getInt("id_paciente");
+                    Correo=rs.getString("email");
                     System.out.println(rs.getString("nombre"));
                     System.out.println(rs.getString("apellido_Paterno"));
                     System.out.println(rs.getString("apellido_materno"));
                 }
+                rs.close();
             } catch (SQLException ex) {
                 System.out.println("no esta");
                 Logger.getLogger(Agregar_cita.class.getName()).log(Level.SEVERE, null, ex);
@@ -339,21 +391,50 @@ public class Agregar_cita extends javax.swing.JInternalFrame {
                 pstm.setInt(4, auxID);
                 pstm.setInt(5, 1);
                 pstm.executeUpdate();
+                pstm.close();
+                
+                try {
+                    Socket s = new Socket("www.gmail.com", 80);
+                    if (s.isConnected()) {
+                        EnviarMailConfirmacion(Correo);
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(AgregarPaciente.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
             } else {
-                int reply = JOptionPane.showConfirmDialog(null, "El paciente no esta registrada en nuestra Base de Datos",
-                        "El paciente no esta registrada en nuestra Base de Datos,\n DESEA REGISTRARLO: ", JOptionPane.OK_CANCEL_OPTION);
+                int reply = JOptionPane.showConfirmDialog(this, "El paciente no esta registrado en nuestra Base de Datos,\n ¿DESEA REGISTRARLO? ",
+                        "El paciente no esta registrado en nuestra Base de Datos", JOptionPane.OK_CANCEL_OPTION);
                 //JOptionPane.showMessageDialog(null, "El paciente no esta registrada en nuestra Base de Datos");
                 if(reply==0){
-                    AgregarPaciente ap=new AgregarPaciente();
+                    AgregarPaciente ap=new AgregarPaciente(isAdmin,(isAdmin?mp:ms));
                     ap.asignarValor(iNombre.getText(), iApPaterno.getText(), iApMaterno.getText()); 
+                    JDialog frame= new JDialog();
+                    frame.setModal(true);
+                    frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+                    JDesktopPane desk= new JDesktopPane();
+                    desk.removeAll();
+                    ap.panelPadre(frame);
+                    frame.setLocation((isAdmin?mp.localizacion():ms.localizacion()));
+                    desk.add(ap);
+                    frame.add(desk);
+                    ap.setSize(757, 493);
+                    desk.setSize(757, 493);
+                    frame.setSize(757, 493);
+                    ap.show();
+                    desk.setVisible(true);
+                    desk.show();
+                    frame.validate();
+                    frame.repaint();
+                    frame.setVisible(true);
                     
-                    soloPanel sP= new soloPanel();
-                    sP.agregarP(ap);                    
-                    ap.panelPadre(sP);
                 }                
             }
+            co.close();
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(Agregar_cita.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         }
 
     }//GEN-LAST:event_agregarActionPerformed
@@ -361,6 +442,14 @@ public class Agregar_cita extends javax.swing.JInternalFrame {
     private void iApMaternoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iApMaternoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_iApMaternoActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void iApPaternoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iApPaternoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_iApPaternoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -383,6 +472,7 @@ public class Agregar_cita extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     private javax.swing.JRadioButton limpieza;
     // End of variables declaration//GEN-END:variables
 }

@@ -6,17 +6,24 @@
 package consultoriodental;
 
 import java.awt.BorderLayout;
+import java.io.IOException;
+import java.net.Socket;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractListModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.ListModel;
 import javax.swing.event.ListDataListener;
@@ -33,16 +40,23 @@ public class BuscarCita extends javax.swing.JInternalFrame {
     ArrayList<Object[]> datos;
     DefaultListModel model= new DefaultListModel();
     String url ="jdbc:mysql://localhost:3306/clinicadental?user=root&password=panda101";
+    MenuPrincipal mp;
+    MenuSecretaria ms;
     
-    public BuscarCita() {
+    public BuscarCita(boolean permisos,JFrame menu) {
         initComponents();
+        if(permisos){
+            mp=(MenuPrincipal)menu;
+        }else{
+            ms=(MenuSecretaria)menu;
+        }
            // Agregar_cita.ManejadorTecla mt = new Agregar_cita.ManejadorTecla();
         setTitle("Buscar Cita");
           FondoPanel fp  = new FondoPanel("/fondo/fondoverde.jpg");
         fp.setSize(794, 509);
         this.add(fp,BorderLayout.CENTER);
       //  this.setBounds(0, 0, 200, 200);
-      // this.setLocked(true);
+      this.setLocked(true);
       iBuscarFecha.setVisible(false);
       iBuscar.setToolTipText("ingrese nombre o algun apellido a filtrar");
       iBuscarFecha.setToolTipText("ingrese una fecha valida");
@@ -51,6 +65,22 @@ public class BuscarCita extends javax.swing.JInternalFrame {
       
       this.pack();
         
+    }
+    private boolean locked = false;
+
+    @Override
+    public void reshape(int x, int y, int width, int height) {
+        if (!locked) {
+            super.reshape(x, y, width, height);
+        }
+    }
+
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
     }
     
     public void agregarDatosList(ArrayList<Object[]> datos){
@@ -80,6 +110,8 @@ public class BuscarCita extends javax.swing.JInternalFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         listaFiltro = new javax.swing.JList<>();
         jLabel3 = new javax.swing.JLabel();
+        bCancelarCita = new javax.swing.JButton();
+        bPosponerCita = new javax.swing.JButton();
 
         jLabel1.setText("Buscar por:");
 
@@ -108,8 +140,9 @@ public class BuscarCita extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Coincidencias: ");
 
-        iBuscarFecha.setMaxSelectableDate(new java.util.Date(1514790115000L));
-        iBuscarFecha.setMinSelectableDate(new java.util.Date(-2208961289000L));
+        iBuscarFecha.setDate(obtenerFechaActual());
+        iBuscarFecha.setMaxSelectableDate(new java.util.Date(1546326115000L));
+        iBuscarFecha.setMinSelectableDate(new java.util.Date(1420095715000L));
 
         listaFiltro.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         listaFiltro.setToolTipText("selecione un nombre para ver mas detalles");
@@ -122,11 +155,25 @@ public class BuscarCita extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Detalles busqueda:");
 
+        bCancelarCita.setText("Cancelar Cita");
+        bCancelarCita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bCancelarCitaActionPerformed(evt);
+            }
+        });
+
+        bPosponerCita.setText("Posponer Cita");
+        bPosponerCita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bPosponerCitaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
@@ -143,14 +190,19 @@ public class BuscarCita extends javax.swing.JInternalFrame {
                         .addComponent(bFiltrar)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel3)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(bCancelarCita)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(bPosponerCita))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(49, 49, 49))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(58, Short.MAX_VALUE)
+                .addContainerGap(52, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -162,6 +214,12 @@ public class BuscarCita extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(43, 43, 43)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(bCancelarCita)
+                            .addComponent(bPosponerCita)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(iBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -173,9 +231,8 @@ public class BuscarCita extends javax.swing.JInternalFrame {
                         .addGap(20, 20, 20)
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(56, 56, 56))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(31, 31, 31))
         );
 
         pack();
@@ -195,18 +252,22 @@ public class BuscarCita extends javax.swing.JInternalFrame {
 
     private void clearResult(){
         model.removeAllElements();
-        model.add(0, "NOMBRE     APELLIDO PAT     APELLIDO MAT");      
+        model.add(0, "NOMBRE     APELLIDO PAT     APELLIDO MAT");
+        oDetalles.setText("");
+        listaFiltro.setSelectedIndex(0);  
     }
     
     private void bFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bFiltrarActionPerformed
         if (!iBuscar.getText().isEmpty() || iBuscarFecha.getDate() != null) {
             datos = new ArrayList<>();
+            clearResult();
             String buscarpor = "";
             SimpleDateFormat fecha = new SimpleDateFormat("dd-MM-yyyy");
             if (seleccionarBusqueda.getSelectedIndex() == 1) {
                 buscarpor = "Select * from paciente p inner join cita c on p.id_paciente=c.id_paciente "
                         + "where p.nombre like '%" + iBuscar.getText() + "%' or apellido_Paterno like '%" + iBuscar.getText() + "%' or apellido_materno like '%" + iBuscar.getText() + "%'";
             } else {
+                ///// METER UN IF PARA SOLO MOSTRAR CITAS FUTURAS NO PASADAS
                 buscarpor = "Select * from paciente p inner join cita c on p.id_paciente=c.id_paciente"
                         + " where c.fecha_cita = '" + fecha.format(iBuscarFecha.getDate()) + "'";
             }
@@ -217,11 +278,11 @@ public class BuscarCita extends javax.swing.JInternalFrame {
                 Statement stm = co.createStatement();
                 ResultSet rs = stm.executeQuery(buscarpor);
 
-                clearResult();
                 
+                boolean flag = false;
                     while (rs.next()) {
                     
-                        String dat[] = new String[8];
+                        String dat[] = new String[11];
                         dat[0] = String.valueOf(rs.getString("nombre"));//nombre
                         dat[1] = String.valueOf(rs.getString("apellido_Paterno"));//apPaterno
                         dat[2] = String.valueOf(rs.getString("apellido_materno"));//apMaterno 
@@ -231,9 +292,19 @@ public class BuscarCita extends javax.swing.JInternalFrame {
                         dat[6] = String.valueOf(rs.getString("hora_cita"));//apMaterno 
                         dat[7] = String.valueOf(rs.getString("motivo"));//apMaterno 
 
+                        dat[8] = String.valueOf(rs.getString("id_cita"));//id_cita
+                        dat[9] = String.valueOf(rs.getString("id_paciente"));//id_paciente
+                        dat[11]= String.valueOf(rs.getString("email"));//id_paciente
                         datos.add(dat);
+                        flag=true;
                     }
+                    if(flag)
                     agregarDatosList(datos);                
+                    else
+                        JOptionPane.showMessageDialog(this, "No hay citas que coincidan con la busqueda");
+                    rs.close();
+                    co.close();
+                        
             } catch (ClassNotFoundException | SQLException ex) {
                 Logger.getLogger(BuscarCita.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -243,7 +314,7 @@ public class BuscarCita extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_bFiltrarActionPerformed
 
     private void listaFiltroValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaFiltroValueChanged
-        if (listaFiltro.getSelectedIndex() != 0) {
+        if (listaFiltro.getSelectedIndex() >0) {
             int auxindex = listaFiltro.getSelectedIndex() - 1;
 
             String datosss = "";
@@ -261,9 +332,129 @@ public class BuscarCita extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_listaFiltroValueChanged
 
+    private void EnviarMailConfirmacion(String to,String Men) {
+        String para=to;
+        String Mensage=Men;
+        String Asunto="CITA AGENDADA EXITOSAMENTE";
+        EnviarMail env = new EnviarMail(para, Mensage, Asunto);
+        env.SendMail();        
+    
+    }
+    private void bCancelarCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCancelarCitaActionPerformed
+        // TODO add your handling code here:
+        if (listaFiltro.getSelectedIndex() > 0) {
+            if (JOptionPane.showConfirmDialog(rootPane, "¿Realmente desea cancelar la cita ?",
+                    "Cancelacion de cita", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION) {
+                bFiltrarActionPerformed(evt);
+                int auxindex = listaFiltro.getSelectedIndex() - 1;
+                try {
+                    Class.forName("com.mysql.jdbc.Driver");
+                    Connection co = DriverManager.getConnection(url);
+                    PreparedStatement stmt = co.prepareStatement("DELETE FROM cita WHERE id_cita=" + Integer.parseInt((String) datos.get(auxindex)[8]) + " and id_paciente =" + Integer.parseInt((String) datos.get(auxindex)[9]));
+                    stmt.executeUpdate();
+                    stmt.close();
+                    co.close();
+                    try {
+                    Socket s = new Socket("www.gmail.com", 80);
+                    if (s.isConnected()) {
+                        String men="Querido usuario:  "+datos.get(listaFiltro.getSelectedIndex() - 1)[0]+" "+datos.get(listaFiltro.getSelectedIndex() - 1)[1]+" "+datos.get(listaFiltro.getSelectedIndex() - 1)[2]+
+                                ".\nlamentamos informarle que su cita del dia: "+datos.get(auxindex)[5]+""
+                    + "\n y hora: "+datos.get(auxindex)[6]+"a sido cancelada.\nGracias por su preferencia.";
+                        EnviarMailConfirmacion((String) datos.get(auxindex)[11],men);
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(AgregarPaciente.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                    JOptionPane.showMessageDialog(this, "Cita Eliminada con exito");
+                } catch (ClassNotFoundException exc) {
+                    exc.printStackTrace();
+                } catch (SQLException ex) {
+                    Logger.getLogger(BuscarCita.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }//GEN-LAST:event_bCancelarCitaActionPerformed
 
+    private void bPosponerCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPosponerCitaActionPerformed
+        // TODO add your handling code here:
+        if (listaFiltro.getSelectedIndex() > 0) {
+            System.out.println("posponer");
+            int auxindex = listaFiltro.getSelectedIndex() - 1;
+            PanelCalendarCita pc = new PanelCalendarCita(this, (String) datos.get(auxindex)[8]);
+            JDialog frame = new JDialog();
+            frame.add(pc);
+            frame.setModal(true);
+            System.out.println("posponer");
+            frame.setLocationRelativeTo(this);
+            
+            frame.setVisible(true);
+            pc.show();
+            frame.setEnabled(true);
+            frame.setFocusCycleRoot(true);
+            
+        }
+    }//GEN-LAST:event_bPosponerCitaActionPerformed
+
+    public void ActualizarCita(String id,String hora,Date dia){
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection co=DriverManager.getConnection(url);
+            PreparedStatement stmt = co.prepareStatement("UPDATE  cita SET fecha_cita=?,hora_cita=? where id_cita="+id);
+            
+            stmt.setDate(1, dia);
+            stmt.setString(2, hora);
+            
+            stmt.executeUpdate();
+            
+            JOptionPane.showMessageDialog(this, "Cita Actualizada");
+        }
+        catch(ClassNotFoundException exc){
+            exc.printStackTrace();
+        }catch(SQLException ex){
+            //Logger.getLogger(ConexionSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public java.util.Date obtenerFechaActual() {
+        java.util.Date date = new java.util.Date();
+        SimpleDateFormat fdate = new SimpleDateFormat("dd");
+        SimpleDateFormat fMes = new SimpleDateFormat("MM");
+
+        int dia = (Integer.parseInt(fdate.format(date)));
+        int mes = (Integer.parseInt(fMes.format(date)));
+        if (mes == 02) {
+            if (dia < 28) {
+                dia += 1;
+            } else {
+                dia = 1;
+                mes += 1;
+            }
+        }
+        if (mes == 01 && mes == 03 && mes == 05 && mes == 07 && mes == 8 && mes == 10 && mes == 12) {
+            if (dia < 31) {
+                dia += 1;
+            } else {
+                dia = 1;
+                mes += 1;
+            }
+        } else if (dia < 30) {
+            dia += 1;
+        } else {
+            dia = 1;
+            mes += 1;
+        }
+
+        Calendar min = Calendar.getInstance();
+        min.setTime(date);
+        min.set(Calendar.MONTH, mes - 1);
+        min.set(Calendar.DATE, dia);
+        System.out.println("fecha actual : "+min.getTime().toString());
+        return min.getTime();
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bCancelarCita;
     private javax.swing.JButton bFiltrar;
+    private javax.swing.JButton bPosponerCita;
     private javax.swing.JTextField iBuscar;
     private com.toedter.calendar.JDateChooser iBuscarFecha;
     private javax.swing.JLabel jLabel1;
