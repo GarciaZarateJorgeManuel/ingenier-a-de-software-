@@ -6,7 +6,9 @@
 package consultoriodental;
 
 import java.awt.BorderLayout;
+import java.awt.Image;
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
@@ -65,6 +67,8 @@ public class MenuSecretaria extends javax.swing.JFrame {
         nuevoPaciente5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(getIconImage());
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("SISTEMAS DE CITAS");
@@ -88,7 +92,7 @@ public class MenuSecretaria extends javax.swing.JFrame {
         escritorioS.setLayout(escritorioSLayout);
         escritorioSLayout.setHorizontalGroup(
             escritorioSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 836, Short.MAX_VALUE)
+            .addGap(0, 811, Short.MAX_VALUE)
         );
         escritorioSLayout.setVerticalGroup(
             escritorioSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,13 +170,13 @@ public class MenuSecretaria extends javax.swing.JFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(escritorioS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(24, 24, 24))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(313, 313, 313)
                         .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(escritorioS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(49, 49, 49))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,7 +186,7 @@ public class MenuSecretaria extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(escritorioS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -202,11 +206,18 @@ public class MenuSecretaria extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    @Override
+    public Image getIconImage() {
+        Image retValue = Toolkit.getDefaultToolkit().
+                getImage(ClassLoader.getSystemResource("fondo/icono.png"));
+
+        return retValue;
+    }
     private void consultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarActionPerformed
         escritorioS.removeAll();
-        BuscarCita bc = new BuscarCita(false,this);
-      //  escritorioS.add(cc);
-       // cc.show();
+        BuscarCita cc = new BuscarCita(false,this);
+      escritorioS.add(cc);
+       cc.show();
         revalidate();
         repaint();
     }//GEN-LAST:event_consultarActionPerformed
@@ -229,6 +240,13 @@ public class MenuSecretaria extends javax.swing.JFrame {
 
     private void nuevoPaciente3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoPaciente3ActionPerformed
         // TODO add your handling code here:
+        escritorioS.removeAll();
+          Agregar_cita ap = new Agregar_cita(false,this);
+      escritorioS.add(ap);
+      ap.show();
+       escritorioS.setVisible(true);
+       revalidate();
+       repaint(); 
     }//GEN-LAST:event_nuevoPaciente3ActionPerformed
 
     private void nuevoPaciente5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoPaciente5ActionPerformed

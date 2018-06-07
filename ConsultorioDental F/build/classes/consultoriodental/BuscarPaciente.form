@@ -110,6 +110,9 @@
       <Properties>
         <Property name="toolTipText" type="java.lang.String" value="ingrese el nombre o apellido a buscar"/>
       </Properties>
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="iBuscarKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>

@@ -3,7 +3,9 @@ package consultoriodental;
 
 import java.awt.AWTException;
 import java.awt.BorderLayout;
+import java.awt.Image;
 import java.awt.Robot;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -14,6 +16,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -82,6 +85,8 @@ public static String url="jdbc:mysql://localhost:3306/clinicadental?user=root&pa
         olvide = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(getIconImage());
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Usuario:");
@@ -201,6 +206,13 @@ public static String url="jdbc:mysql://localhost:3306/clinicadental?user=root&pa
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    @Override
+    public Image getIconImage() {
+        Image retValue = Toolkit.getDefaultToolkit().
+                getImage(ClassLoader.getSystemResource("fondo/icono.png"));
+
+        return retValue;
+    }
   
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
         usuario.setText("");
@@ -214,7 +226,7 @@ public static String url="jdbc:mysql://localhost:3306/clinicadental?user=root&pa
       String pass="";
        try{
              Class.forName("com.mysql.jdbc.Driver");
-            // co=DriverManager.getConnection("jdbc:mysql://localhost:3306/clinicadental?user=root&password=panda101");
+            //co=DriverManager.getConnection("jdbc:mysql://localhost:3306/clinicadental?user=root&password=panda101");
             Statement stm=co.createStatement();
        ResultSet rs=stm.executeQuery("Select * from personal_clinica where nombre_usuario='"+usuario.getText().toLowerCase()+"' and contrasena='"+contra.getText() +"'");
         

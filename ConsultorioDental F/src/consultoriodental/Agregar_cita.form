@@ -33,7 +33,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace min="0" pref="451" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="441" max="32767" attributes="0"/>
               <Component id="agregar" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="99" max="-2" attributes="0"/>
               <Component id="jButton2" min="-2" max="-2" attributes="0"/>
@@ -88,7 +88,7 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="97" max="32767" attributes="0"/>
+              <EmptySpace pref="87" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -229,8 +229,8 @@
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="15">
-            <StringItem index="0" value="9:00"/>
-            <StringItem index="1" value="9:30"/>
+            <StringItem index="0" value="09:00"/>
+            <StringItem index="1" value="09:30"/>
             <StringItem index="2" value="10:00"/>
             <StringItem index="3" value="10:30"/>
             <StringItem index="4" value="11:00"/>
@@ -284,6 +284,9 @@
       <Properties>
         <Property name="horizontalAlignment" type="int" value="2"/>
       </Properties>
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="iNombreKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="iApPaterno">
       <Properties>
@@ -291,6 +294,7 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="iApPaternoActionPerformed"/>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="iApPaternoKeyTyped"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="iApMaterno">
@@ -299,6 +303,7 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="iApMaternoActionPerformed"/>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="iApMaternoKeyTyped"/>
       </Events>
     </Component>
     <Component class="com.toedter.calendar.JDateChooser" name="iFecha">
@@ -313,6 +318,9 @@
           <Connection code="obtenerFechaActual()" type="code"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="iFechaPropertyChange"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

@@ -129,6 +129,11 @@ public class BuscarPaciente extends javax.swing.JInternalFrame {
         });
 
         iBuscar.setToolTipText("ingrese el nombre o apellido a buscar");
+        iBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                iBuscarKeyTyped(evt);
+            }
+        });
 
         jLabel1.setText("Nombre del paciente: ");
 
@@ -287,6 +292,18 @@ public class BuscarPaciente extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_bVerExpActionPerformed
+
+    private void iBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_iBuscarKeyTyped
+        // TODO add your handling code here:
+        String tamanio= iBuscar.getText(); 
+        char c = evt.getKeyChar();
+        if (Character.isDigit(c) || tamanio.length()>=20) {
+            getToolkit().beep();
+            evt.consume();
+            System.out.println("ingresa solo letras");
+            // Error.setText("Ingresa Solo Letras  
+        }
+    }//GEN-LAST:event_iBuscarKeyTyped
 
     public void moverHide(){
         try {

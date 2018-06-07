@@ -3,6 +3,7 @@ package consultoriodental;
 import java.awt.BorderLayout;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.beans.PropertyVetoException;
 import java.io.IOException;
 import java.sql.Connection;
@@ -87,6 +88,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
         listarCitas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(getIconImage());
+        setResizable(false);
 
         agregar.setBackground(new java.awt.Color(0, 102, 0));
         agregar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -247,6 +250,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    @Override
+    public Image getIconImage() {
+        Image retValue = Toolkit.getDefaultToolkit().
+                getImage(ClassLoader.getSystemResource("fondo/icono.png"));
+
+        return retValue;
+    }
     private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
         if (actual != 1) {
             actual = 1;

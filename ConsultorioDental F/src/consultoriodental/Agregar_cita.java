@@ -37,7 +37,11 @@ public class Agregar_cita extends javax.swing.JInternalFrame {
     MenuPrincipal mp;
     MenuSecretaria ms;
     boolean isAdmin;
+    SimpleDateFormat fecha = new SimpleDateFormat("yyyy-MM-dd");
+                
+    String [] horaDispo={"09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00","16:30","17:00"};
 
+    
     public Agregar_cita(boolean permisos,JFrame menu) {
         initComponents();
         if(permisos){
@@ -54,9 +58,17 @@ public class Agregar_cita extends javax.swing.JInternalFrame {
         this.add(fp, BorderLayout.CENTER);
         //  this.setBounds(0, 0, 200, 200);
         this.setLocked(true);
+        agregar_horas();
         iNombre.setFocusable(true);
         this.pack();
 
+    }
+    public void agregar_horas(){
+        iHora.removeAllItems();
+        for (String horaDispo1 : horaDispo) {
+            iHora.addItem(horaDispo1);
+        }
+        
     }
 
     public java.util.Date obtenerFechaActual() {
@@ -115,7 +127,7 @@ public class Agregar_cita extends javax.swing.JInternalFrame {
 
     private void EnviarMailConfirmacion(String to) {
         String para=to;
-        String Mensage="Querido usuario:  "+iNombre+".\n su cita se a agendado para el dia: "+iFecha.getDate().getTime()+""
+        String Mensage="Querido usuario:  "+iNombre.getText()+".\n su cita se a agendado para el dia: "+fecha.format(iFecha.getDate())+""
                     + "\n a la hora: "+iHora.getSelectedItem().toString()+".\nGracias por su preferencia.";
         String Asunto="CITA AGENDADA EXITOSAMENTE";
         EnviarMail env = new EnviarMail(para, Mensage, Asunto);
@@ -216,7 +228,7 @@ public class Agregar_cita extends javax.swing.JInternalFrame {
 
         jLabel9.setText("Apellido materno:");
 
-        iHora.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00" }));
+        iHora.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00" }));
 
         grupoMotivo.add(ajuste1);
         ajuste1.setText("Consulta con medico cirujano");
@@ -230,11 +242,21 @@ public class Agregar_cita extends javax.swing.JInternalFrame {
         jLabel7.setText("Motivo:");
 
         iNombre.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        iNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                iNombreKeyTyped(evt);
+            }
+        });
 
         iApPaterno.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         iApPaterno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 iApPaternoActionPerformed(evt);
+            }
+        });
+        iApPaterno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                iApPaternoKeyTyped(evt);
             }
         });
 
@@ -244,17 +266,27 @@ public class Agregar_cita extends javax.swing.JInternalFrame {
                 iApMaternoActionPerformed(evt);
             }
         });
+        iApMaterno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                iApMaternoKeyTyped(evt);
+            }
+        });
 
         iFecha.setDate(obtenerFechaActual());
         iFecha.setMaxSelectableDate(new java.util.Date(1546671675000L));
         iFecha.setMinSelectableDate(obtenerFechaActual());
+        iFecha.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                iFechaPropertyChange(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 451, Short.MAX_VALUE)
+                .addGap(0, 441, Short.MAX_VALUE)
                 .addComponent(agregar)
                 .addGap(99, 99, 99)
                 .addComponent(jButton2)
@@ -298,7 +330,7 @@ public class Agregar_cita extends javax.swing.JInternalFrame {
                             .addComponent(limpieza)
                             .addComponent(ajuste2)
                             .addComponent(ajuste1))))
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -380,21 +412,24 @@ public class Agregar_cita extends javax.swing.JInternalFrame {
 
                 pstm.setDate(1, d);
                 pstm.setString(2, iHora.getSelectedItem().toString());
-                if (dolormuela.isSelected()) {
+                int m=500;
+                if (dolormuela.isSelected()||ajuste2.isSelected()) {
                     pstm.setString(3, "dolor de muela");
+                    m=501;
                 }
-                if (limpieza.isSelected()) {
+                if (limpieza.isSelected()||limpieza.isSelected()) {
                     pstm.setString(3, "limpieza general");
+                    m=502;
                 } else {
                     pstm.setString(3, "ajuste de brackets");
                 }
                 pstm.setInt(4, auxID);
-                pstm.setInt(5, 1);
+                pstm.setInt(5, m);
                 pstm.executeUpdate();
                 pstm.close();
                 
                 try {
-                    Socket s = new Socket("www.gmail.com", 80);
+                    Socket s = new Socket("www.google.com", 80);
                     if (s.isConnected()) {
                         EnviarMailConfirmacion(Correo);
                     }
@@ -431,6 +466,8 @@ public class Agregar_cita extends javax.swing.JInternalFrame {
                 }                
             }
             co.close();
+            JOptionPane.showMessageDialog(rootPane, "¡La cita a sido agendada exitosamente!");
+            checarFecha();
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(Agregar_cita.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -450,6 +487,84 @@ public class Agregar_cita extends javax.swing.JInternalFrame {
     private void iApPaternoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iApPaternoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_iApPaternoActionPerformed
+
+    private void iFechaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_iFechaPropertyChange
+            checarFecha();
+    }//GEN-LAST:event_iFechaPropertyChange
+public void checarFecha(){
+    try {                                      
+                // TODO add your handling code here:
+                System.out.println("cambio de fecha: :v");   
+                agregar_horas();
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection co = DriverManager.getConnection(url);
+                
+                Statement stm = co.createStatement();
+                ResultSet rs;
+                try {
+                    rs = stm.executeQuery("Select * from cita where fecha_cita='" + fecha.format(iFecha.getDate())+"'");
+                    
+                    System.out.println("consulta :");
+                    ArrayList<String> horaCita= new ArrayList<>();
+                    while (rs.next()) {                                          
+                        System.out.println("horas consulta: "+rs.getString("hora_cita"));
+                        horaCita.add(rs.getString("hora_cita"));                      
+                    }
+                    rs.close();
+                    for(int x=0;x<horaCita.size();x++){
+                        for(int y=0;y<18;y++){
+                            System.out.println(":v hora cita: "+horaCita.get(x)+" hora cambiada: "+iHora.getItemAt(y));
+                                
+                            if(horaCita.get(x).equals(iHora.getItemAt(y))){
+                                System.out.println("hora cita: "+horaCita.get(x)+" hora cambiada: "+iHora.getItemAt(y));
+                                iHora.removeItem(iHora.getItemAt(y));
+                            }
+                        }
+                    }
+                    
+                } catch (SQLException ex) {
+                    System.out.println("no esta");
+                    Logger.getLogger(Agregar_cita.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } catch (ClassNotFoundException | SQLException ex) {
+                Logger.getLogger(Agregar_cita.class.getName()).log(Level.SEVERE, null, ex);
+            }
+}
+    private void iNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_iNombreKeyTyped
+        // TODO add your handling code here:
+        String tamanio= iNombre.getText(); 
+        char c = evt.getKeyChar();
+        if (Character.isDigit(c) || tamanio.length()>=15) {
+            getToolkit().beep();
+            evt.consume();
+            System.out.println("ingresa solo letras");
+            // Error.setText("Ingresa Solo Letras  
+        }
+    }//GEN-LAST:event_iNombreKeyTyped
+
+    private void iApPaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_iApPaternoKeyTyped
+        // TODO add your handling code here:
+        String tamanio= iApPaterno.getText(); 
+        char c = evt.getKeyChar();
+        if (Character.isDigit(c) || tamanio.length()>=15) {
+            getToolkit().beep();
+            evt.consume();
+            System.out.println("ingresa solo letras");
+            // Error.setText("Ingresa Solo Letras  
+        }
+    }//GEN-LAST:event_iApPaternoKeyTyped
+
+    private void iApMaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_iApMaternoKeyTyped
+        // TODO add your handling code here:
+        String tamanio= iApMaterno.getText(); 
+        char c = evt.getKeyChar();
+        if (Character.isDigit(c) || tamanio.length()>=15) {
+            getToolkit().beep();
+            evt.consume();
+            System.out.println("ingresa solo letras");
+            // Error.setText("Ingresa Solo Letras  
+        }
+    }//GEN-LAST:event_iApMaternoKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

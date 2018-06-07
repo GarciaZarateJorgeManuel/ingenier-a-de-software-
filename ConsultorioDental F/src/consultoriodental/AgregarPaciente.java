@@ -23,8 +23,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
@@ -105,8 +107,6 @@ public class AgregarPaciente extends javax.swing.JInternalFrame {
         iApPat = new javax.swing.JTextField();
         iApMaterno = new javax.swing.JTextField();
         iCalle = new javax.swing.JTextField();
-        iColonia = new javax.swing.JTextField();
-        iMunicipio = new javax.swing.JTextField();
         iCodpost = new javax.swing.JTextField();
         iEmail = new javax.swing.JTextField();
         iTelefono = new javax.swing.JTextField();
@@ -135,6 +135,8 @@ public class AgregarPaciente extends javax.swing.JInternalFrame {
         iAnimale = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         iExtencion = new javax.swing.JComboBox<>();
+        iMunicipio = new javax.swing.JComboBox<>();
+        iColonia = new javax.swing.JComboBox<>();
 
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -172,7 +174,40 @@ public class AgregarPaciente extends javax.swing.JInternalFrame {
 
         jLabel8.setText("Telefono: ");
 
+        iNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                iNombreKeyTyped(evt);
+            }
+        });
+
+        iApPat.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                iApPatKeyTyped(evt);
+            }
+        });
+
+        iApMaterno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                iApMaternoKeyTyped(evt);
+            }
+        });
+
+        iCodpost.setEditable(false);
+        iCodpost.setText("68715");
+
+        iEmail.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                iEmailKeyTyped(evt);
+            }
+        });
+
         iTelefono.setText("951");
+        iTelefono.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        iTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                iTelefonoKeyTyped(evt);
+            }
+        });
 
         agregar1.setBackground(new java.awt.Color(168, 202, 235));
         agregar1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -198,6 +233,9 @@ public class AgregarPaciente extends javax.swing.JInternalFrame {
         jDateChooser1.setMinSelectableDate(new java.util.Date(-631126740000L));
 
         jLabel12.setText("Estado:");
+
+        iEstado.setEditable(false);
+        iEstado.setText("Oaxaca");
 
         otroCheckEnfermedad.setText("otro");
         otroCheckEnfermedad.addActionListener(new java.awt.event.ActionListener() {
@@ -272,6 +310,20 @@ public class AgregarPaciente extends javax.swing.JInternalFrame {
 
         iExtencion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "gmail.com", "hotmail.com", "outlook.com", "live.com" }));
 
+        iMunicipio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Abejones", "Acatlán de Pérez Figueroa", "Asunción Cacalotepec", "Asunción Cuyotepeji", "Asunción Ixtaltepec", "Asunción Nochixtlán", "Asunción Ocotlán", "Asunción Tlacolulita", "Ayoquezco de Aldama", "Ayotzintepec", "Calihualá", "Candelaria Loxicha", "Capulálpam de Méndez", "Chahuites", "Chalcatongo de Hidalgo", "Chiquihuitlán de Benito Juárez", "Ciudad Ixtepec", "Ciénega de Zimatlán", "Coatecas Altas", "Coicoyán de las Flores", "Concepción Buenavista", "Concepción Pápalo", "Constancia del Rosario", "Cosolapa", "Cosoltepec", "Cuilápam de Guerrero", "Cuyamecalco Villa de Zaragoza", "El Barrio de la Soledad", "El Espinal", "Eloxochitlán de Flores Magón", "Fresnillo de Trujano", "Guadalupe de Ramírez", "Guadalupe Etla", "Guelatao de Juárez", "Guevea de Humboldt", "Heroica Ciudad de Ejutla de Crespo", "Heroica Ciudad de Huajuapan de León", "Heroica Ciudad de Juchitán de Zaragoza", "Heroica Ciudad de Tlaxiaco", "Huautepec", "Huautla de Jiménez", "Ixpantepec Nieves", "Ixtlán de Juárez", "La Compañía", "La Pe", "La Reforma", "La Trinidad Vista Hermosa", "Loma Bonita", "Magdalena Apasco", "Magdalena Jaltepec", "Magdalena Mixtepec", "Magdalena Ocotlán", "Magdalena Peñasco", "Magdalena Teitipac", "Magdalena Tequisistlán", "Magdalena Tlacotepec", "Magdalena Yodocono de Porfirio Díaz", "Magdalena Zahuatlán", "Mariscala de Juárez", "Matías Romero Avendaño", "Mazatlán Villa de Flores", "Mesones Hidalgo", "Miahuatlán de Porfirio Díaz", "Mixistlán de la Reforma", "Monjas", "Mártires de Tacubaya", "Natividad", "Nazareno Etla", "Nejapa de Madero", "Nuevo Zoquiápam", "Oaxaca de Juárez", "Ocotlán de Morelos", "Pinotepa de Don Luis", "Pluma Hidalgo", "Putla Villa de Guerrero", "Reforma de Pineda", "Reyes Etla", "Rojas de Cuauhtémoc", "Salina Cruz", "San Agustín Amatengo", "San Agustín Atenango", "San Agustín Chayuco", "San Agustín de las Juntas", "San Agustín Etla", "San Agustín Loxicha", "San Agustín Tlacotepec", "San Agustín Yatareni", "San Andrés Cabecera Nueva", "San Andrés Dinicuiti", "San Andrés Huaxpaltepec", "San Andrés Huayápam", "San Andrés Ixtlahuaca", "San Andrés Lagunas", "San Andrés Nuxiño", "San Andrés Paxtlán", "San Andrés Sinaxtla", "San Andrés Solaga", "San Andrés Teotilálpam", "San Andrés Tepetlapa", "San Andrés Yaá", "San Andrés Zabache", "San Andrés Zautla", "San Antonino Castillo Velasco", "San Antonino el Alto", "San Antonino Monte Verde", "San Antonio Acutla", "San Antonio de la Cal", "San Antonio Huitepec", "San Antonio Nanahuatípam", "San Antonio Sinicahua", "San Antonio Tepetlapa", "San Baltazar Chichicápam", "San Baltazar Loxicha", "San Baltazar Yatzachi el Bajo", "San Bartolo Coyotepec", "San Bartolo Soyaltepec", "San Bartolo Yautepec", "San Bartolomé Ayautla", "San Bartolomé Loxicha", "San Bartolomé Quialana", "San Bartolomé Yucuañe", "San Bartolomé Zoogocho", "San Bernardo Mixtepec", "San Blas Atempa", "San Carlos Yautepec", "San Cristóbal Amatlán", "San Cristóbal Amoltepec", "San Cristóbal Lachirioag", "San Cristóbal Suchixtlahuaca", "San Dionisio del Mar", "San Dionisio Ocotepec", "San Dionisio Ocotlán", "San Esteban Atatlahuca", "San Felipe Jalapa de Díaz", "San Felipe Tejalápam", "San Felipe Usila", "San Francisco Cahuacuá", "San Francisco Cajonos", "San Francisco Chapulapa", "San Francisco Chindúa", "San Francisco del Mar", "San Francisco Huehuetlán", "San Francisco Ixhuatán", "San Francisco Jaltepetongo", "San Francisco Lachigoló", "San Francisco Logueche", "San Francisco Nuxaño", "San Francisco Ozolotepec", "San Francisco Sola", "San Francisco Telixtlahuaca", "San Francisco Teopan", "San Francisco Tlapancingo", "San Gabriel Mixtepec", "San Ildefonso Amatlán", "San Ildefonso Sola", "San Ildefonso Villa Alta", "San Jacinto Amilpas", "San Jacinto Tlacotepec", "San Jerónimo Coatlán", "San Jerónimo Silacayoapilla", "San Jerónimo Sosola", "San Jerónimo Taviche", "San Jerónimo Tecóatl", "San Jerónimo Tlacochahuaya", "San Jorge Nuchita", "San José Ayuquila", "San José Chiltepec", "San José del Peñasco", "San José del Progreso", "San José Estancia Grande", "San José Independencia", "San José Lachiguiri", "San José Tenango", "San Juan Achiutla", "San Juan Atepec", "San Juan Bautista Atatlahuca", "San Juan Bautista Coixtlahuaca", "San Juan Bautista Cuicatlán", "San Juan Bautista Guelache", "San Juan Bautista Jayacatlán", "San Juan Bautista Lo de Soto", "San Juan Bautista Suchitepec", "San Juan Bautista Tlachichilco", "San Juan Bautista Tlacoatzintepec", "San Juan Bautista Tuxtepec", "San Juan Bautista Valle Nacional", "San Juan Cacahuatepec", "San Juan Chicomezúchil", "San Juan Chilateca", "San Juan Cieneguilla", "San Juan Coatzóspam", "San Juan Colorado", "San Juan Comaltepec", "San Juan Cotzocón", "San Juan de los Cués", "San Juan del Estado", "San Juan del Río", "San Juan Diuxi", "San Juan Evangelista Analco", "San Juan Guelavía", "San Juan Guichicovi", "San Juan Ihualtepec", "San Juan Juquila Mixes", "San Juan Juquila Vijanos", "San Juan Lachao", "San Juan Lachigalla", "San Juan Lajarcia", "San Juan Lalana", "San Juan Mazatlán", "San Juan Mixtepec -Dto. 08 -", "San Juan Mixtepec -Dto. 26 -", "San Juan Ozolotepec", "San Juan Petlapa", "San Juan Quiahije", "San Juan Quiotepec", "San Juan Sayultepec", "San Juan Tabaá", "San Juan Tamazola", "San Juan Teita", "San Juan Teitipac", "San Juan Tepeuxila", "San Juan Teposcolula", "San Juan Yaeé", "San Juan Yatzona", "San Juan Yucuita", "San Juan Ñumí", "San Lorenzo", "San Lorenzo Albarradas", "San Lorenzo Cacaotepec", "San Lorenzo Cuaunecuiltitla", "San Lorenzo Texmelúcan", "San Lorenzo Victoria", "San Lucas Camotlán", "San Lucas Ojitlán", "San Lucas Quiaviní", "San Lucas Zoquiápam", "San Luis Amatlán", "San Marcial Ozolotepec", "San Marcos Arteaga", "San Martín de los Cansecos", "San Martín Huamelúlpam", "San Martín Itunyoso", "San Martín Lachilá", "San Martín Peras", "San Martín Tilcajete", "San Martín Toxpalan", "San Martín Zacatepec", "San Mateo Cajonos", "San Mateo del Mar", "San Mateo Etlatongo", "San Mateo Nejápam", "San Mateo Peñasco", "San Mateo Piñas", "San Mateo Río Hondo", "San Mateo Sindihui", "San Mateo Tlapiltepec", "San Mateo Yoloxochitlán", "San Mateo Yucutindoo", "San Melchor Betaza", "San Miguel Achiutla", "San Miguel Ahuehuetitlán", "San Miguel Aloápam", "San Miguel Amatitlán", "San Miguel Amatlán", "San Miguel Chicahua", "San Miguel Chimalapa", "San Miguel Coatlán", "San Miguel del Puerto", "San Miguel del Río", "San Miguel Ejutla", "San Miguel el Grande", "San Miguel Huautla", "San Miguel Mixtepec", "San Miguel Panixtlahuaca", "San Miguel Peras", "San Miguel Piedras", "San Miguel Quetzaltepec", "San Miguel Santa Flor", "San Miguel Soyaltepec", "San Miguel Suchixtepec", "San Miguel Tecomatlán", "San Miguel Tenango", "San Miguel Tequixtepec", "San Miguel Tilquiápam", "San Miguel Tlacamama", "San Miguel Tlacotepec", "San Miguel Tulancingo", "San Miguel Yotao", "San Nicolás", "San Nicolás Hidalgo", "San Pablo Coatlán", "San Pablo Cuatro Venados", "San Pablo Etla", "San Pablo Huitzo", "San Pablo Huixtepec", "San Pablo Macuiltianguis", "San Pablo Tijaltepec", "San Pablo Villa de Mitla", "San Pablo Yaganiza", "San Pedro Amuzgos", "San Pedro Apóstol", "San Pedro Atoyac", "San Pedro Cajonos", "San Pedro Comitancillo", "San Pedro Coxcaltepec Cántaros", "San Pedro el Alto", "San Pedro Huamelula", "San Pedro Huilotepec", "San Pedro Ixcatlán", "San Pedro Ixtlahuaca", "San Pedro Jaltepetongo", "San Pedro Jicayán", "San Pedro Jocotipac", "San Pedro Juchatengo", "San Pedro Mixtepec -Dto. 22 -", "San Pedro Mixtepec -Dto. 26 -", "San Pedro Molinos", "San Pedro Mártir", "San Pedro Mártir Quiechapa", "San Pedro Mártir Yucuxaco", "San Pedro Nopala", "San Pedro Ocopetatillo", "San Pedro Ocotepec", "San Pedro Pochutla", "San Pedro Quiatoni", "San Pedro Sochiápam", "San Pedro Tapanatepec", "San Pedro Taviche", "San Pedro Teozacoalco", "San Pedro Teutila", "San Pedro Tidaá", "San Pedro Topiltepec", "San Pedro Totolápam", "San Pedro y San Pablo Ayutla", "San Pedro y San Pablo Teposcolula", "San Pedro y San Pablo Tequixtepec", "San Pedro Yaneri", "San Pedro Yucunama", "San Pedro Yólox", "San Raymundo Jalpan", "San Sebastián Abasolo", "San Sebastián Coatlán", "San Sebastián Ixcapa", "San Sebastián Nicananduta", "San Sebastián Río Hondo", "San Sebastián Tecomaxtlahuaca", "San Sebastián Teitipac", "San Sebastián Tutla", "San Simón Almolongas", "San Simón Zahuatlán", "San Vicente Coatlán", "San Vicente Lachixío", "San Vicente Nuñú", "Santa Ana", "Santa Ana Ateixtlahuaca", "Santa Ana Cuauhtémoc", "Santa Ana del Valle", "Santa Ana Tavela", "Santa Ana Tlapacoyan", "Santa Ana Yareni", "Santa Ana Zegache", "Santa Catalina Quierí", "Santa Catarina Cuixtla", "Santa Catarina Ixtepeji", "Santa Catarina Juquila", "Santa Catarina Lachatao", "Santa Catarina Loxicha", "Santa Catarina Mechoacán", "Santa Catarina Minas", "Santa Catarina Quiané", "Santa Catarina Quioquitani", "Santa Catarina Tayata", "Santa Catarina Ticuá", "Santa Catarina Yosonotú", "Santa Catarina Zapoquila", "Santa Cruz Acatepec", "Santa Cruz Amilpas", "Santa Cruz de Bravo", "Santa Cruz Itundujia", "Santa Cruz Mixtepec", "Santa Cruz Nundaco", "Santa Cruz Papalutla", "Santa Cruz Tacache de Mina", "Santa Cruz Tacahua", "Santa Cruz Tayata", "Santa Cruz Xitla", "Santa Cruz Xoxocotlán", "Santa Cruz Zenzontepec", "Santa Gertrudis", "Santa Inés de Zaragoza", "Santa Inés del Monte", "Santa Inés Yatzeche", "Santa Lucía del Camino", "Santa Lucía Miahuatlán", "Santa Lucía Monteverde", "Santa Lucía Ocotlán", "Santa Magdalena Jicotlán", "Santa María Alotepec", "Santa María Apazco", "Santa María Atzompa", "Santa María Camotlán", "Santa María Chachoápam", "Santa María Chilchotla", "Santa María Chimalapa", "Santa María Colotepec", "Santa María Cortijo", "Santa María Coyotepec", "Santa María del Rosario", "Santa María del Tule", "Santa María Ecatepec", "Santa María Guelacé", "Santa María Guienagati", "Santa María Huatulco", "Santa María Huazolotitlán", "Santa María Ipalapa", "Santa María Ixcatlán", "Santa María Jacatepec", "Santa María Jalapa del Marqués", "Santa María Jaltianguis", "Santa María la Asunción", "Santa María Lachixío", "Santa María Mixtequilla", "Santa María Nativitas", "Santa María Nduayaco", "Santa María Ozolotepec", "Santa María Petapa", "Santa María Peñoles", "Santa María Pápalo", "Santa María Quiegolani", "Santa María Sola", "Santa María Tataltepec", "Santa María Tecomavaca", "Santa María Temaxcalapa", "Santa María Temaxcaltepec", "Santa María Teopoxco", "Santa María Tepantlali", "Santa María Texcatitlán", "Santa María Tlahuitoltepec", "Santa María Tlalixtac", "Santa María Tonameca", "Santa María Totolapilla", "Santa María Xadani", "Santa María Yalina", "Santa María Yavesía", "Santa María Yolotepec", "Santa María Yosoyúa", "Santa María Yucuhiti", "Santa María Zacatepec", "Santa María Zaniza", "Santa María Zoquitlán", "Santiago Amoltepec", "Santiago Apoala", "Santiago Apóstol", "Santiago Astata", "Santiago Atitlán", "Santiago Ayuquililla", "Santiago Cacaloxtepec", "Santiago Camotlán", "Santiago Chazumba", "Santiago Choápam", "Santiago Comaltepec", "Santiago del Río", "Santiago Huajolotitlán", "Santiago Huauclilla", "Santiago Ihuitlán Plumas", "Santiago Ixcuintepec", "Santiago Ixtayutla", "Santiago Jamiltepec", "Santiago Jocotepec", "Santiago Juxtlahuaca", "Santiago Lachiguiri", "Santiago Lalopa", "Santiago Laollaga", "Santiago Laxopa", "Santiago Llano Grande", "Santiago Matatlán", "Santiago Miltepec", "Santiago Minas", "Santiago Nacaltepec", "Santiago Nejapilla", "Santiago Niltepec", "Santiago Nundiche", "Santiago Nuyoó", "Santiago Pinotepa Nacional", "Santiago Suchilquitongo", "Santiago Tamazola", "Santiago Tapextla", "Santiago Tenango", "Santiago Tepetlapa", "Santiago Tetepec", "Santiago Texcalcingo", "Santiago Textitlán", "Santiago Tilantongo", "Santiago Tillo", "Santiago Tlazoyaltepec", "Santiago Xanica", "Santiago Xiacuí", "Santiago Yaitepec", "Santiago Yaveo", "Santiago Yolomécatl", "Santiago Yosondúa", "Santiago Yucuyachi", "Santiago Zacatepec", "Santiago Zoochila", "Santo Domingo Albarradas", "Santo Domingo Armenta", "Santo Domingo Chihuitán", "Santo Domingo de Morelos", "Santo Domingo Ingenio", "Santo Domingo Ixcatlán", "Santo Domingo Nuxaá", "Santo Domingo Ozolotepec", "Santo Domingo Petapa", "Santo Domingo Roayaga", "Santo Domingo Tehuantepec", "Santo Domingo Teojomulco", "Santo Domingo Tepuxtepec", "Santo Domingo Tlatayápam", "Santo Domingo Tomaltepec", "Santo Domingo Tonaltepec", "Santo Domingo Tonalá", "Santo Domingo Xagacía", "Santo Domingo Yanhuitlán", "Santo Domingo Yodohino", "Santo Domingo Zanatepec", "Santo Tomás Jalieza", "Santo Tomás Mazaltepec", "Santo Tomás Ocotepec", "Santo Tomás Tamazulapan", "Santos Reyes Nopala", "Santos Reyes Pápalo", "Santos Reyes Tepejillo", "Santos Reyes Yucuná", "Silacayoápam", "Sitio de Xitlapehua", "Soledad Etla", "Tamazulápam del Espíritu Santo", "Tanetze de Zaragoza", "Taniche", "Tataltepec de Valdés", "Teococuilco de Marcos Pérez", "Teotitlán de Flores Magón", "Teotitlán del Valle", "Teotongo", "Tepelmeme Villa de Morelos", "Tezoatlán de Segura y Luna", "Tlacolula de Matamoros", "Tlacotepec Plumas", "Tlalixtac de Cabrera", "Totontepec Villa de Morelos", "Trinidad Zaachila", "Unión Hidalgo", "Valerio Trujano", "Villa de Chilapa de Díaz", "Villa de Etla", "Villa de Tamazulápam del Progreso", "Villa de Tututepec de Melchor Ocampo", "Villa de Zaachila", "Villa Díaz Ordaz", "Villa Hidalgo", "Villa Sola de Vega", "Villa Talea de Castro", "Villa Tejúpam de la Unión", "Yaxe", "Yogana", "Yutanduchi de Guerrero", "Zapotitlán Lagunas", "Zapotitlán Palmas", "Zimatlán de Álvarez", "Ánimas Trujano" }));
+        iMunicipio.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                iMunicipioItemStateChanged(evt);
+            }
+        });
+
+        iColonia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Abejones" }));
+        iColonia.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                iColoniaItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -323,24 +375,6 @@ public class AgregarPaciente extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel12)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(iEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel6)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(iColonia, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel13)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(iCalle, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(iMunicipio, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -350,8 +384,28 @@ public class AgregarPaciente extends javax.swing.JInternalFrame {
                                 .addComponent(iCodpost, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(17, 17, 17))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(144, 144, 144)))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addGap(16, 16, 16)
+                                        .addComponent(iCalle, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel6)
+                                            .addComponent(jLabel13))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(iColonia, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(1, 1, 1)))
+                                .addGap(18, 18, 18))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(iMunicipio, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel12)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(iEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -415,12 +469,16 @@ public class AgregarPaciente extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(79, 79, 79)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel12)
                                     .addComponent(iEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel13)
+                                    .addComponent(iMunicipio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel6)
                                     .addComponent(iColonia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -435,9 +493,7 @@ public class AgregarPaciente extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel3)
-                                    .addComponent(jLabel13)
-                                    .addComponent(iApMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(iMunicipio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(iApMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -589,7 +645,7 @@ public class AgregarPaciente extends javax.swing.JInternalFrame {
     private void enviarMailContraseña(){
         String para=iEmail.getText()+"@"+iExtencion.getSelectedItem().toString();
         String Mensage="Querido:  "+iNombre.getText()+".\n A sido registrado con exito en el sistema de citas de la Clinica Dental del"
-                + " Dr. Francisco. \nSi desea ocupar nuestra aplicacion Movil para el control de sus citas puede descargarla atravez del enlace\n'enlace'"
+                + " Dr. Francisco. \nSi desea ocupar nuestra aplicacion Movil para el control de sus citas puede descargarla a traves del enlace\n'enlace'"
                     + "\n su contraseña generada por default es: ClinicaPass\nMuchas gracias por su preferencia.";
         String Asunto="Registro Exitoso";
         System.out.println("correo paciente:"+para);
@@ -686,7 +742,7 @@ public class AgregarPaciente extends javax.swing.JInternalFrame {
                 Connection co = DriverManager.getConnection(url);
                 Statement stm = co.createStatement();
                 ResultSet rs = stm.executeQuery("select id_paciente from clinicadental.paciente where "
-                        + "nombre='" + iNombre.getText() + "' and apellido_paterno='" + iApPat.getText() + "' and apellido_materno='" + iApMaterno.getText() + "'");
+                        + "nombre='" + iNombre.getText().toUpperCase() + "' and apellido_paterno='" + iApPat.getText().toUpperCase() + "' and apellido_materno='" + iApMaterno.getText().toUpperCase() + "'");
 
                 String dat[] = new String[6];
                 while (rs.next()) {
@@ -706,17 +762,17 @@ public class AgregarPaciente extends javax.swing.JInternalFrame {
                     java.util.Date f = jDateChooser1.getDate();
                     java.sql.Date d = new java.sql.Date(f.getTime());
                     System.out.println("slol2");
-                    pstm.setString(1, iNombre.getText());
-                    pstm.setString(2, iApPat.getText());
-                    pstm.setString(3, iApMaterno.getText());
+                    pstm.setString(1, iNombre.getText().toUpperCase());
+                    pstm.setString(2, iApPat.getText().toUpperCase());
+                    pstm.setString(3, iApMaterno.getText().toUpperCase());
                     pstm.setString(4, (iHombre.isSelected() ? "H" : "M"));
                     System.out.println("slol3");
-                    pstm.setString(5, iCalle.getText());
-                    pstm.setString(6, iColonia.getText());
-                    pstm.setString(7, iCodpost.getText());
+                    pstm.setString(5, iCalle.getText().toUpperCase());
+                    pstm.setString(6, iColonia.getSelectedItem().toString().toUpperCase());
+                    pstm.setString(7, iCodpost.getText().toUpperCase());
                     System.out.println("slol4");
-                    pstm.setString(8, iEstado.getText());
-                    pstm.setString(9, iTelefono.getText());
+                    pstm.setString(8, iEstado.getText().toUpperCase());
+                    pstm.setString(9, iTelefono.getText().toUpperCase());
                     System.out.println("slol5");
                     pstm.setDate(10, d);
                     System.out.println("slol6");
@@ -735,7 +791,7 @@ public class AgregarPaciente extends javax.swing.JInternalFrame {
                     } catch (IOException ex) {
                         Logger.getLogger(AgregarPaciente.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    CrearDocx(iNombre.getText()+"_"+iApPat.getText()+"_"+iApMaterno.getText()+d.toString());
+                    CrearDocx(iNombre.getText().toUpperCase()+"_"+iApPat.getText().toUpperCase()+"_"+iApMaterno.getText().toUpperCase()+d.toString());
                     
                     JOptionPane.showMessageDialog(this, "EL PACIENTE SE REGISTRO CON EXITO ");
                     rs.close();
@@ -809,6 +865,104 @@ public class AgregarPaciente extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         auxPanel.dispose();
     }//GEN-LAST:event_bCancelarActionPerformed
+
+    private void iNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_iNombreKeyTyped
+        // TODO add your handling code here:
+         String tamanio= iNombre.getText(); 
+        char c = evt.getKeyChar();
+        if (Character.isDigit(c) || tamanio.length()>=15) {
+            getToolkit().beep();
+            evt.consume();
+            System.out.println("ingresa solo letras");
+            // Error.setText("Ingresa Solo Letras  
+        }
+    }//GEN-LAST:event_iNombreKeyTyped
+
+    private void iApPatKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_iApPatKeyTyped
+        // TODO add your handling code here:
+        String tamanio= iApPat.getText(); 
+        char c = evt.getKeyChar();
+        if (Character.isDigit(c) || tamanio.length()>=15) {
+            getToolkit().beep();
+            evt.consume();
+            System.out.println("ingresa solo letras");
+            // Error.setText("Ingresa Solo Letras  
+        }
+    }//GEN-LAST:event_iApPatKeyTyped
+
+    private void iApMaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_iApMaternoKeyTyped
+        // TODO add your handling code here:
+        String tamanio= iApMaterno.getText(); 
+        char c = evt.getKeyChar();
+        if (Character.isDigit(c) || tamanio.length()>=15) {
+            getToolkit().beep();
+            evt.consume();
+            System.out.println("ingresa solo letras");
+            // Error.setText("Ingresa Solo Letras  
+        }
+    }//GEN-LAST:event_iApMaternoKeyTyped
+
+    private void iTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_iTelefonoKeyTyped
+        // TODO add your handling code here:
+        String tamanio= iTelefono.getText(); 
+        char c = evt.getKeyChar();
+        if (Character.isLetter(c) || tamanio.length()>=10) {
+            getToolkit().beep();
+            evt.consume();
+            System.out.println("ingresa solo numeros");
+            // Error.setText("Ingresa Solo Letras  
+        }
+    }//GEN-LAST:event_iTelefonoKeyTyped
+
+    private void iEmailKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_iEmailKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_iEmailKeyTyped
+
+    private void iMunicipioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_iMunicipioItemStateChanged
+        // TODO add your handling code here:
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+
+            Connection co = DriverManager.getConnection("jdbc:mysql://localhost:3306/mexico?user=root&password=panda101");
+            Statement stm = co.createStatement();
+            ResultSet rs = stm.executeQuery("select asentamiento from mexico.sepomex where municipio='"+ iMunicipio.getSelectedItem().toString()+"' and estado='Oaxaca' order by asentamiento");
+            ArrayList<String> dat = new ArrayList<>();
+            while (rs.next()) {                
+                dat.add(String.valueOf(rs.getString("asentamiento"))) ;
+            //    
+            }
+            //iColonia.removeAllItems();
+            String[]items=new String[dat.size()];
+            for (int i=0;i<dat.size();i++) {    
+                items[i]=dat.get(i);
+            }
+            
+            JComboBox jc=new JComboBox(items);
+            iColonia.setModel(jc.getModel());
+            iColonia.setSelectedIndex(1);
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(AgregarPaciente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_iMunicipioItemStateChanged
+
+    private void iColoniaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_iColoniaItemStateChanged
+        // TODO add your handling code here:
+        try {
+                Class.forName("com.mysql.jdbc.Driver");
+                
+                Connection co = DriverManager.getConnection("jdbc:mysql://localhost:3306/mexico?user=root&password=panda101");
+                Statement stm = co.createStatement();
+                ResultSet rs = stm.executeQuery("select cp from mexico.sepomex where asentamiento ='"+iColonia.getSelectedItem().toString()+"' and municipio='"+ iMunicipio.getSelectedItem().toString()+"' and estado ='Oaxaca' ");
+                ArrayList<String> dat = new ArrayList<>();
+                while (rs.next()) {
+                    iCodpost.setText(""+String.valueOf(rs.getString("cp"))) ;
+                    
+                }
+                
+            } catch (ClassNotFoundException | SQLException ex) {
+                Logger.getLogger(AgregarPaciente.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }//GEN-LAST:event_iColoniaItemStateChanged
     private void registrarSalir(java.awt.event.ActionEvent evt) {
         agregar1ActionPerformed(evt);
         auxPanel.dispose();
@@ -851,7 +1005,7 @@ public class AgregarPaciente extends javax.swing.JInternalFrame {
     private javax.swing.JTextField iApPat;
     private javax.swing.JTextField iCalle;
     private javax.swing.JTextField iCodpost;
-    private javax.swing.JTextField iColonia;
+    private javax.swing.JComboBox<String> iColonia;
     private javax.swing.JTextField iEmail;
     private javax.swing.JTextField iEstado;
     private javax.swing.JComboBox<String> iExtencion;
@@ -859,7 +1013,7 @@ public class AgregarPaciente extends javax.swing.JInternalFrame {
     private javax.swing.JTextField iMaterial;
     private javax.swing.JTextField iMedic;
     private javax.swing.JRadioButton iMujer;
-    private javax.swing.JTextField iMunicipio;
+    private javax.swing.JComboBox<String> iMunicipio;
     private javax.swing.JTextField iNombre;
     private javax.swing.JTextField iTelefono;
     private com.toedter.calendar.JDateChooser jDateChooser1;

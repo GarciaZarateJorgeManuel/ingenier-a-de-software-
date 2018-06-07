@@ -89,31 +89,6 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jSeparator1" min="-2" pref="8" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="iEstado" min="-2" pref="118" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="iColonia" min="-2" pref="118" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="iCalle" min="-2" pref="110" max="-2" attributes="0"/>
-                                  <Component id="iMunicipio" min="-2" pref="118" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                      </Group>
-                  </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -124,10 +99,37 @@
                               <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="144" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                                      <Component id="iCalle" min="-2" pref="110" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="1" attributes="0">
+                                          <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="iColonia" min="-2" pref="117" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                           </Group>
                       </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="iMunicipio" alignment="1" min="-2" pref="117" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="iEstado" min="-2" pref="118" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <Component id="jSeparator2" min="-2" pref="8" max="-2" attributes="0"/>
@@ -214,13 +216,18 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="iEstado" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="iMunicipio" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="iColonia" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -239,9 +246,7 @@
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="iApMaterno" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="iMunicipio" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -416,25 +421,43 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="iNombre">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="iNombreKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="iApPat">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="iApPatKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="iApMaterno">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="iApMaternoKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="iCalle">
     </Component>
-    <Component class="javax.swing.JTextField" name="iColonia">
-    </Component>
-    <Component class="javax.swing.JTextField" name="iMunicipio">
-    </Component>
     <Component class="javax.swing.JTextField" name="iCodpost">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+        <Property name="text" type="java.lang.String" value="68715"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="iEmail">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="iEmailKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="iTelefono">
       <Properties>
         <Property name="text" type="java.lang.String" value="951"/>
+        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+          <Color id="Cursor de Texto"/>
+        </Property>
       </Properties>
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="iTelefonoKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="agregar1">
       <Properties>
@@ -484,6 +507,10 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="iEstado">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+        <Property name="text" type="java.lang.String" value="Oaxaca"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator1">
     </Component>
@@ -614,6 +641,605 @@
           </StringArray>
         </Property>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="iMunicipio">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="570">
+            <StringItem index="0" value="Abejones"/>
+            <StringItem index="1" value="Acatl&#xe1;n de P&#xe9;rez Figueroa"/>
+            <StringItem index="2" value="Asunci&#xf3;n Cacalotepec"/>
+            <StringItem index="3" value="Asunci&#xf3;n Cuyotepeji"/>
+            <StringItem index="4" value="Asunci&#xf3;n Ixtaltepec"/>
+            <StringItem index="5" value="Asunci&#xf3;n Nochixtl&#xe1;n"/>
+            <StringItem index="6" value="Asunci&#xf3;n Ocotl&#xe1;n"/>
+            <StringItem index="7" value="Asunci&#xf3;n Tlacolulita"/>
+            <StringItem index="8" value="Ayoquezco de Aldama"/>
+            <StringItem index="9" value="Ayotzintepec"/>
+            <StringItem index="10" value="Calihual&#xe1;"/>
+            <StringItem index="11" value="Candelaria Loxicha"/>
+            <StringItem index="12" value="Capul&#xe1;lpam de M&#xe9;ndez"/>
+            <StringItem index="13" value="Chahuites"/>
+            <StringItem index="14" value="Chalcatongo de Hidalgo"/>
+            <StringItem index="15" value="Chiquihuitl&#xe1;n de Benito Ju&#xe1;rez"/>
+            <StringItem index="16" value="Ciudad Ixtepec"/>
+            <StringItem index="17" value="Ci&#xe9;nega de Zimatl&#xe1;n"/>
+            <StringItem index="18" value="Coatecas Altas"/>
+            <StringItem index="19" value="Coicoy&#xe1;n de las Flores"/>
+            <StringItem index="20" value="Concepci&#xf3;n Buenavista"/>
+            <StringItem index="21" value="Concepci&#xf3;n P&#xe1;palo"/>
+            <StringItem index="22" value="Constancia del Rosario"/>
+            <StringItem index="23" value="Cosolapa"/>
+            <StringItem index="24" value="Cosoltepec"/>
+            <StringItem index="25" value="Cuil&#xe1;pam de Guerrero"/>
+            <StringItem index="26" value="Cuyamecalco Villa de Zaragoza"/>
+            <StringItem index="27" value="El Barrio de la Soledad"/>
+            <StringItem index="28" value="El Espinal"/>
+            <StringItem index="29" value="Eloxochitl&#xe1;n de Flores Mag&#xf3;n"/>
+            <StringItem index="30" value="Fresnillo de Trujano"/>
+            <StringItem index="31" value="Guadalupe de Ram&#xed;rez"/>
+            <StringItem index="32" value="Guadalupe Etla"/>
+            <StringItem index="33" value="Guelatao de Ju&#xe1;rez"/>
+            <StringItem index="34" value="Guevea de Humboldt"/>
+            <StringItem index="35" value="Heroica Ciudad de Ejutla de Crespo"/>
+            <StringItem index="36" value="Heroica Ciudad de Huajuapan de Le&#xf3;n"/>
+            <StringItem index="37" value="Heroica Ciudad de Juchit&#xe1;n de Zaragoza"/>
+            <StringItem index="38" value="Heroica Ciudad de Tlaxiaco"/>
+            <StringItem index="39" value="Huautepec"/>
+            <StringItem index="40" value="Huautla de Jim&#xe9;nez"/>
+            <StringItem index="41" value="Ixpantepec Nieves"/>
+            <StringItem index="42" value="Ixtl&#xe1;n de Ju&#xe1;rez"/>
+            <StringItem index="43" value="La Compa&#xf1;&#xed;a"/>
+            <StringItem index="44" value="La Pe"/>
+            <StringItem index="45" value="La Reforma"/>
+            <StringItem index="46" value="La Trinidad Vista Hermosa"/>
+            <StringItem index="47" value="Loma Bonita"/>
+            <StringItem index="48" value="Magdalena Apasco"/>
+            <StringItem index="49" value="Magdalena Jaltepec"/>
+            <StringItem index="50" value="Magdalena Mixtepec"/>
+            <StringItem index="51" value="Magdalena Ocotl&#xe1;n"/>
+            <StringItem index="52" value="Magdalena Pe&#xf1;asco"/>
+            <StringItem index="53" value="Magdalena Teitipac"/>
+            <StringItem index="54" value="Magdalena Tequisistl&#xe1;n"/>
+            <StringItem index="55" value="Magdalena Tlacotepec"/>
+            <StringItem index="56" value="Magdalena Yodocono de Porfirio D&#xed;az"/>
+            <StringItem index="57" value="Magdalena Zahuatl&#xe1;n"/>
+            <StringItem index="58" value="Mariscala de Ju&#xe1;rez"/>
+            <StringItem index="59" value="Mat&#xed;as Romero Avenda&#xf1;o"/>
+            <StringItem index="60" value="Mazatl&#xe1;n Villa de Flores"/>
+            <StringItem index="61" value="Mesones Hidalgo"/>
+            <StringItem index="62" value="Miahuatl&#xe1;n de Porfirio D&#xed;az"/>
+            <StringItem index="63" value="Mixistl&#xe1;n de la Reforma"/>
+            <StringItem index="64" value="Monjas"/>
+            <StringItem index="65" value="M&#xe1;rtires de Tacubaya"/>
+            <StringItem index="66" value="Natividad"/>
+            <StringItem index="67" value="Nazareno Etla"/>
+            <StringItem index="68" value="Nejapa de Madero"/>
+            <StringItem index="69" value="Nuevo Zoqui&#xe1;pam"/>
+            <StringItem index="70" value="Oaxaca de Ju&#xe1;rez"/>
+            <StringItem index="71" value="Ocotl&#xe1;n de Morelos"/>
+            <StringItem index="72" value="Pinotepa de Don Luis"/>
+            <StringItem index="73" value="Pluma Hidalgo"/>
+            <StringItem index="74" value="Putla Villa de Guerrero"/>
+            <StringItem index="75" value="Reforma de Pineda"/>
+            <StringItem index="76" value="Reyes Etla"/>
+            <StringItem index="77" value="Rojas de Cuauht&#xe9;moc"/>
+            <StringItem index="78" value="Salina Cruz"/>
+            <StringItem index="79" value="San Agust&#xed;n Amatengo"/>
+            <StringItem index="80" value="San Agust&#xed;n Atenango"/>
+            <StringItem index="81" value="San Agust&#xed;n Chayuco"/>
+            <StringItem index="82" value="San Agust&#xed;n de las Juntas"/>
+            <StringItem index="83" value="San Agust&#xed;n Etla"/>
+            <StringItem index="84" value="San Agust&#xed;n Loxicha"/>
+            <StringItem index="85" value="San Agust&#xed;n Tlacotepec"/>
+            <StringItem index="86" value="San Agust&#xed;n Yatareni"/>
+            <StringItem index="87" value="San Andr&#xe9;s Cabecera Nueva"/>
+            <StringItem index="88" value="San Andr&#xe9;s Dinicuiti"/>
+            <StringItem index="89" value="San Andr&#xe9;s Huaxpaltepec"/>
+            <StringItem index="90" value="San Andr&#xe9;s Huay&#xe1;pam"/>
+            <StringItem index="91" value="San Andr&#xe9;s Ixtlahuaca"/>
+            <StringItem index="92" value="San Andr&#xe9;s Lagunas"/>
+            <StringItem index="93" value="San Andr&#xe9;s Nuxi&#xf1;o"/>
+            <StringItem index="94" value="San Andr&#xe9;s Paxtl&#xe1;n"/>
+            <StringItem index="95" value="San Andr&#xe9;s Sinaxtla"/>
+            <StringItem index="96" value="San Andr&#xe9;s Solaga"/>
+            <StringItem index="97" value="San Andr&#xe9;s Teotil&#xe1;lpam"/>
+            <StringItem index="98" value="San Andr&#xe9;s Tepetlapa"/>
+            <StringItem index="99" value="San Andr&#xe9;s Ya&#xe1;"/>
+            <StringItem index="100" value="San Andr&#xe9;s Zabache"/>
+            <StringItem index="101" value="San Andr&#xe9;s Zautla"/>
+            <StringItem index="102" value="San Antonino Castillo Velasco"/>
+            <StringItem index="103" value="San Antonino el Alto"/>
+            <StringItem index="104" value="San Antonino Monte Verde"/>
+            <StringItem index="105" value="San Antonio Acutla"/>
+            <StringItem index="106" value="San Antonio de la Cal"/>
+            <StringItem index="107" value="San Antonio Huitepec"/>
+            <StringItem index="108" value="San Antonio Nanahuat&#xed;pam"/>
+            <StringItem index="109" value="San Antonio Sinicahua"/>
+            <StringItem index="110" value="San Antonio Tepetlapa"/>
+            <StringItem index="111" value="San Baltazar Chichic&#xe1;pam"/>
+            <StringItem index="112" value="San Baltazar Loxicha"/>
+            <StringItem index="113" value="San Baltazar Yatzachi el Bajo"/>
+            <StringItem index="114" value="San Bartolo Coyotepec"/>
+            <StringItem index="115" value="San Bartolo Soyaltepec"/>
+            <StringItem index="116" value="San Bartolo Yautepec"/>
+            <StringItem index="117" value="San Bartolom&#xe9; Ayautla"/>
+            <StringItem index="118" value="San Bartolom&#xe9; Loxicha"/>
+            <StringItem index="119" value="San Bartolom&#xe9; Quialana"/>
+            <StringItem index="120" value="San Bartolom&#xe9; Yucua&#xf1;e"/>
+            <StringItem index="121" value="San Bartolom&#xe9; Zoogocho"/>
+            <StringItem index="122" value="San Bernardo Mixtepec"/>
+            <StringItem index="123" value="San Blas Atempa"/>
+            <StringItem index="124" value="San Carlos Yautepec"/>
+            <StringItem index="125" value="San Crist&#xf3;bal Amatl&#xe1;n"/>
+            <StringItem index="126" value="San Crist&#xf3;bal Amoltepec"/>
+            <StringItem index="127" value="San Crist&#xf3;bal Lachirioag"/>
+            <StringItem index="128" value="San Crist&#xf3;bal Suchixtlahuaca"/>
+            <StringItem index="129" value="San Dionisio del Mar"/>
+            <StringItem index="130" value="San Dionisio Ocotepec"/>
+            <StringItem index="131" value="San Dionisio Ocotl&#xe1;n"/>
+            <StringItem index="132" value="San Esteban Atatlahuca"/>
+            <StringItem index="133" value="San Felipe Jalapa de D&#xed;az"/>
+            <StringItem index="134" value="San Felipe Tejal&#xe1;pam"/>
+            <StringItem index="135" value="San Felipe Usila"/>
+            <StringItem index="136" value="San Francisco Cahuacu&#xe1;"/>
+            <StringItem index="137" value="San Francisco Cajonos"/>
+            <StringItem index="138" value="San Francisco Chapulapa"/>
+            <StringItem index="139" value="San Francisco Chind&#xfa;a"/>
+            <StringItem index="140" value="San Francisco del Mar"/>
+            <StringItem index="141" value="San Francisco Huehuetl&#xe1;n"/>
+            <StringItem index="142" value="San Francisco Ixhuat&#xe1;n"/>
+            <StringItem index="143" value="San Francisco Jaltepetongo"/>
+            <StringItem index="144" value="San Francisco Lachigol&#xf3;"/>
+            <StringItem index="145" value="San Francisco Logueche"/>
+            <StringItem index="146" value="San Francisco Nuxa&#xf1;o"/>
+            <StringItem index="147" value="San Francisco Ozolotepec"/>
+            <StringItem index="148" value="San Francisco Sola"/>
+            <StringItem index="149" value="San Francisco Telixtlahuaca"/>
+            <StringItem index="150" value="San Francisco Teopan"/>
+            <StringItem index="151" value="San Francisco Tlapancingo"/>
+            <StringItem index="152" value="San Gabriel Mixtepec"/>
+            <StringItem index="153" value="San Ildefonso Amatl&#xe1;n"/>
+            <StringItem index="154" value="San Ildefonso Sola"/>
+            <StringItem index="155" value="San Ildefonso Villa Alta"/>
+            <StringItem index="156" value="San Jacinto Amilpas"/>
+            <StringItem index="157" value="San Jacinto Tlacotepec"/>
+            <StringItem index="158" value="San Jer&#xf3;nimo Coatl&#xe1;n"/>
+            <StringItem index="159" value="San Jer&#xf3;nimo Silacayoapilla"/>
+            <StringItem index="160" value="San Jer&#xf3;nimo Sosola"/>
+            <StringItem index="161" value="San Jer&#xf3;nimo Taviche"/>
+            <StringItem index="162" value="San Jer&#xf3;nimo Tec&#xf3;atl"/>
+            <StringItem index="163" value="San Jer&#xf3;nimo Tlacochahuaya"/>
+            <StringItem index="164" value="San Jorge Nuchita"/>
+            <StringItem index="165" value="San Jos&#xe9; Ayuquila"/>
+            <StringItem index="166" value="San Jos&#xe9; Chiltepec"/>
+            <StringItem index="167" value="San Jos&#xe9; del Pe&#xf1;asco"/>
+            <StringItem index="168" value="San Jos&#xe9; del Progreso"/>
+            <StringItem index="169" value="San Jos&#xe9; Estancia Grande"/>
+            <StringItem index="170" value="San Jos&#xe9; Independencia"/>
+            <StringItem index="171" value="San Jos&#xe9; Lachiguiri"/>
+            <StringItem index="172" value="San Jos&#xe9; Tenango"/>
+            <StringItem index="173" value="San Juan Achiutla"/>
+            <StringItem index="174" value="San Juan Atepec"/>
+            <StringItem index="175" value="San Juan Bautista Atatlahuca"/>
+            <StringItem index="176" value="San Juan Bautista Coixtlahuaca"/>
+            <StringItem index="177" value="San Juan Bautista Cuicatl&#xe1;n"/>
+            <StringItem index="178" value="San Juan Bautista Guelache"/>
+            <StringItem index="179" value="San Juan Bautista Jayacatl&#xe1;n"/>
+            <StringItem index="180" value="San Juan Bautista Lo de Soto"/>
+            <StringItem index="181" value="San Juan Bautista Suchitepec"/>
+            <StringItem index="182" value="San Juan Bautista Tlachichilco"/>
+            <StringItem index="183" value="San Juan Bautista Tlacoatzintepec"/>
+            <StringItem index="184" value="San Juan Bautista Tuxtepec"/>
+            <StringItem index="185" value="San Juan Bautista Valle Nacional"/>
+            <StringItem index="186" value="San Juan Cacahuatepec"/>
+            <StringItem index="187" value="San Juan Chicomez&#xfa;chil"/>
+            <StringItem index="188" value="San Juan Chilateca"/>
+            <StringItem index="189" value="San Juan Cieneguilla"/>
+            <StringItem index="190" value="San Juan Coatz&#xf3;spam"/>
+            <StringItem index="191" value="San Juan Colorado"/>
+            <StringItem index="192" value="San Juan Comaltepec"/>
+            <StringItem index="193" value="San Juan Cotzoc&#xf3;n"/>
+            <StringItem index="194" value="San Juan de los Cu&#xe9;s"/>
+            <StringItem index="195" value="San Juan del Estado"/>
+            <StringItem index="196" value="San Juan del R&#xed;o"/>
+            <StringItem index="197" value="San Juan Diuxi"/>
+            <StringItem index="198" value="San Juan Evangelista Analco"/>
+            <StringItem index="199" value="San Juan Guelav&#xed;a"/>
+            <StringItem index="200" value="San Juan Guichicovi"/>
+            <StringItem index="201" value="San Juan Ihualtepec"/>
+            <StringItem index="202" value="San Juan Juquila Mixes"/>
+            <StringItem index="203" value="San Juan Juquila Vijanos"/>
+            <StringItem index="204" value="San Juan Lachao"/>
+            <StringItem index="205" value="San Juan Lachigalla"/>
+            <StringItem index="206" value="San Juan Lajarcia"/>
+            <StringItem index="207" value="San Juan Lalana"/>
+            <StringItem index="208" value="San Juan Mazatl&#xe1;n"/>
+            <StringItem index="209" value="San Juan Mixtepec -Dto. 08 -"/>
+            <StringItem index="210" value="San Juan Mixtepec -Dto. 26 -"/>
+            <StringItem index="211" value="San Juan Ozolotepec"/>
+            <StringItem index="212" value="San Juan Petlapa"/>
+            <StringItem index="213" value="San Juan Quiahije"/>
+            <StringItem index="214" value="San Juan Quiotepec"/>
+            <StringItem index="215" value="San Juan Sayultepec"/>
+            <StringItem index="216" value="San Juan Taba&#xe1;"/>
+            <StringItem index="217" value="San Juan Tamazola"/>
+            <StringItem index="218" value="San Juan Teita"/>
+            <StringItem index="219" value="San Juan Teitipac"/>
+            <StringItem index="220" value="San Juan Tepeuxila"/>
+            <StringItem index="221" value="San Juan Teposcolula"/>
+            <StringItem index="222" value="San Juan Yae&#xe9;"/>
+            <StringItem index="223" value="San Juan Yatzona"/>
+            <StringItem index="224" value="San Juan Yucuita"/>
+            <StringItem index="225" value="San Juan &#xd1;um&#xed;"/>
+            <StringItem index="226" value="San Lorenzo"/>
+            <StringItem index="227" value="San Lorenzo Albarradas"/>
+            <StringItem index="228" value="San Lorenzo Cacaotepec"/>
+            <StringItem index="229" value="San Lorenzo Cuaunecuiltitla"/>
+            <StringItem index="230" value="San Lorenzo Texmel&#xfa;can"/>
+            <StringItem index="231" value="San Lorenzo Victoria"/>
+            <StringItem index="232" value="San Lucas Camotl&#xe1;n"/>
+            <StringItem index="233" value="San Lucas Ojitl&#xe1;n"/>
+            <StringItem index="234" value="San Lucas Quiavin&#xed;"/>
+            <StringItem index="235" value="San Lucas Zoqui&#xe1;pam"/>
+            <StringItem index="236" value="San Luis Amatl&#xe1;n"/>
+            <StringItem index="237" value="San Marcial Ozolotepec"/>
+            <StringItem index="238" value="San Marcos Arteaga"/>
+            <StringItem index="239" value="San Mart&#xed;n de los Cansecos"/>
+            <StringItem index="240" value="San Mart&#xed;n Huamel&#xfa;lpam"/>
+            <StringItem index="241" value="San Mart&#xed;n Itunyoso"/>
+            <StringItem index="242" value="San Mart&#xed;n Lachil&#xe1;"/>
+            <StringItem index="243" value="San Mart&#xed;n Peras"/>
+            <StringItem index="244" value="San Mart&#xed;n Tilcajete"/>
+            <StringItem index="245" value="San Mart&#xed;n Toxpalan"/>
+            <StringItem index="246" value="San Mart&#xed;n Zacatepec"/>
+            <StringItem index="247" value="San Mateo Cajonos"/>
+            <StringItem index="248" value="San Mateo del Mar"/>
+            <StringItem index="249" value="San Mateo Etlatongo"/>
+            <StringItem index="250" value="San Mateo Nej&#xe1;pam"/>
+            <StringItem index="251" value="San Mateo Pe&#xf1;asco"/>
+            <StringItem index="252" value="San Mateo Pi&#xf1;as"/>
+            <StringItem index="253" value="San Mateo R&#xed;o Hondo"/>
+            <StringItem index="254" value="San Mateo Sindihui"/>
+            <StringItem index="255" value="San Mateo Tlapiltepec"/>
+            <StringItem index="256" value="San Mateo Yoloxochitl&#xe1;n"/>
+            <StringItem index="257" value="San Mateo Yucutindoo"/>
+            <StringItem index="258" value="San Melchor Betaza"/>
+            <StringItem index="259" value="San Miguel Achiutla"/>
+            <StringItem index="260" value="San Miguel Ahuehuetitl&#xe1;n"/>
+            <StringItem index="261" value="San Miguel Alo&#xe1;pam"/>
+            <StringItem index="262" value="San Miguel Amatitl&#xe1;n"/>
+            <StringItem index="263" value="San Miguel Amatl&#xe1;n"/>
+            <StringItem index="264" value="San Miguel Chicahua"/>
+            <StringItem index="265" value="San Miguel Chimalapa"/>
+            <StringItem index="266" value="San Miguel Coatl&#xe1;n"/>
+            <StringItem index="267" value="San Miguel del Puerto"/>
+            <StringItem index="268" value="San Miguel del R&#xed;o"/>
+            <StringItem index="269" value="San Miguel Ejutla"/>
+            <StringItem index="270" value="San Miguel el Grande"/>
+            <StringItem index="271" value="San Miguel Huautla"/>
+            <StringItem index="272" value="San Miguel Mixtepec"/>
+            <StringItem index="273" value="San Miguel Panixtlahuaca"/>
+            <StringItem index="274" value="San Miguel Peras"/>
+            <StringItem index="275" value="San Miguel Piedras"/>
+            <StringItem index="276" value="San Miguel Quetzaltepec"/>
+            <StringItem index="277" value="San Miguel Santa Flor"/>
+            <StringItem index="278" value="San Miguel Soyaltepec"/>
+            <StringItem index="279" value="San Miguel Suchixtepec"/>
+            <StringItem index="280" value="San Miguel Tecomatl&#xe1;n"/>
+            <StringItem index="281" value="San Miguel Tenango"/>
+            <StringItem index="282" value="San Miguel Tequixtepec"/>
+            <StringItem index="283" value="San Miguel Tilqui&#xe1;pam"/>
+            <StringItem index="284" value="San Miguel Tlacamama"/>
+            <StringItem index="285" value="San Miguel Tlacotepec"/>
+            <StringItem index="286" value="San Miguel Tulancingo"/>
+            <StringItem index="287" value="San Miguel Yotao"/>
+            <StringItem index="288" value="San Nicol&#xe1;s"/>
+            <StringItem index="289" value="San Nicol&#xe1;s Hidalgo"/>
+            <StringItem index="290" value="San Pablo Coatl&#xe1;n"/>
+            <StringItem index="291" value="San Pablo Cuatro Venados"/>
+            <StringItem index="292" value="San Pablo Etla"/>
+            <StringItem index="293" value="San Pablo Huitzo"/>
+            <StringItem index="294" value="San Pablo Huixtepec"/>
+            <StringItem index="295" value="San Pablo Macuiltianguis"/>
+            <StringItem index="296" value="San Pablo Tijaltepec"/>
+            <StringItem index="297" value="San Pablo Villa de Mitla"/>
+            <StringItem index="298" value="San Pablo Yaganiza"/>
+            <StringItem index="299" value="San Pedro Amuzgos"/>
+            <StringItem index="300" value="San Pedro Ap&#xf3;stol"/>
+            <StringItem index="301" value="San Pedro Atoyac"/>
+            <StringItem index="302" value="San Pedro Cajonos"/>
+            <StringItem index="303" value="San Pedro Comitancillo"/>
+            <StringItem index="304" value="San Pedro Coxcaltepec C&#xe1;ntaros"/>
+            <StringItem index="305" value="San Pedro el Alto"/>
+            <StringItem index="306" value="San Pedro Huamelula"/>
+            <StringItem index="307" value="San Pedro Huilotepec"/>
+            <StringItem index="308" value="San Pedro Ixcatl&#xe1;n"/>
+            <StringItem index="309" value="San Pedro Ixtlahuaca"/>
+            <StringItem index="310" value="San Pedro Jaltepetongo"/>
+            <StringItem index="311" value="San Pedro Jicay&#xe1;n"/>
+            <StringItem index="312" value="San Pedro Jocotipac"/>
+            <StringItem index="313" value="San Pedro Juchatengo"/>
+            <StringItem index="314" value="San Pedro Mixtepec -Dto. 22 -"/>
+            <StringItem index="315" value="San Pedro Mixtepec -Dto. 26 -"/>
+            <StringItem index="316" value="San Pedro Molinos"/>
+            <StringItem index="317" value="San Pedro M&#xe1;rtir"/>
+            <StringItem index="318" value="San Pedro M&#xe1;rtir Quiechapa"/>
+            <StringItem index="319" value="San Pedro M&#xe1;rtir Yucuxaco"/>
+            <StringItem index="320" value="San Pedro Nopala"/>
+            <StringItem index="321" value="San Pedro Ocopetatillo"/>
+            <StringItem index="322" value="San Pedro Ocotepec"/>
+            <StringItem index="323" value="San Pedro Pochutla"/>
+            <StringItem index="324" value="San Pedro Quiatoni"/>
+            <StringItem index="325" value="San Pedro Sochi&#xe1;pam"/>
+            <StringItem index="326" value="San Pedro Tapanatepec"/>
+            <StringItem index="327" value="San Pedro Taviche"/>
+            <StringItem index="328" value="San Pedro Teozacoalco"/>
+            <StringItem index="329" value="San Pedro Teutila"/>
+            <StringItem index="330" value="San Pedro Tida&#xe1;"/>
+            <StringItem index="331" value="San Pedro Topiltepec"/>
+            <StringItem index="332" value="San Pedro Totol&#xe1;pam"/>
+            <StringItem index="333" value="San Pedro y San Pablo Ayutla"/>
+            <StringItem index="334" value="San Pedro y San Pablo Teposcolula"/>
+            <StringItem index="335" value="San Pedro y San Pablo Tequixtepec"/>
+            <StringItem index="336" value="San Pedro Yaneri"/>
+            <StringItem index="337" value="San Pedro Yucunama"/>
+            <StringItem index="338" value="San Pedro Y&#xf3;lox"/>
+            <StringItem index="339" value="San Raymundo Jalpan"/>
+            <StringItem index="340" value="San Sebasti&#xe1;n Abasolo"/>
+            <StringItem index="341" value="San Sebasti&#xe1;n Coatl&#xe1;n"/>
+            <StringItem index="342" value="San Sebasti&#xe1;n Ixcapa"/>
+            <StringItem index="343" value="San Sebasti&#xe1;n Nicananduta"/>
+            <StringItem index="344" value="San Sebasti&#xe1;n R&#xed;o Hondo"/>
+            <StringItem index="345" value="San Sebasti&#xe1;n Tecomaxtlahuaca"/>
+            <StringItem index="346" value="San Sebasti&#xe1;n Teitipac"/>
+            <StringItem index="347" value="San Sebasti&#xe1;n Tutla"/>
+            <StringItem index="348" value="San Sim&#xf3;n Almolongas"/>
+            <StringItem index="349" value="San Sim&#xf3;n Zahuatl&#xe1;n"/>
+            <StringItem index="350" value="San Vicente Coatl&#xe1;n"/>
+            <StringItem index="351" value="San Vicente Lachix&#xed;o"/>
+            <StringItem index="352" value="San Vicente Nu&#xf1;&#xfa;"/>
+            <StringItem index="353" value="Santa Ana"/>
+            <StringItem index="354" value="Santa Ana Ateixtlahuaca"/>
+            <StringItem index="355" value="Santa Ana Cuauht&#xe9;moc"/>
+            <StringItem index="356" value="Santa Ana del Valle"/>
+            <StringItem index="357" value="Santa Ana Tavela"/>
+            <StringItem index="358" value="Santa Ana Tlapacoyan"/>
+            <StringItem index="359" value="Santa Ana Yareni"/>
+            <StringItem index="360" value="Santa Ana Zegache"/>
+            <StringItem index="361" value="Santa Catalina Quier&#xed;"/>
+            <StringItem index="362" value="Santa Catarina Cuixtla"/>
+            <StringItem index="363" value="Santa Catarina Ixtepeji"/>
+            <StringItem index="364" value="Santa Catarina Juquila"/>
+            <StringItem index="365" value="Santa Catarina Lachatao"/>
+            <StringItem index="366" value="Santa Catarina Loxicha"/>
+            <StringItem index="367" value="Santa Catarina Mechoac&#xe1;n"/>
+            <StringItem index="368" value="Santa Catarina Minas"/>
+            <StringItem index="369" value="Santa Catarina Quian&#xe9;"/>
+            <StringItem index="370" value="Santa Catarina Quioquitani"/>
+            <StringItem index="371" value="Santa Catarina Tayata"/>
+            <StringItem index="372" value="Santa Catarina Ticu&#xe1;"/>
+            <StringItem index="373" value="Santa Catarina Yosonot&#xfa;"/>
+            <StringItem index="374" value="Santa Catarina Zapoquila"/>
+            <StringItem index="375" value="Santa Cruz Acatepec"/>
+            <StringItem index="376" value="Santa Cruz Amilpas"/>
+            <StringItem index="377" value="Santa Cruz de Bravo"/>
+            <StringItem index="378" value="Santa Cruz Itundujia"/>
+            <StringItem index="379" value="Santa Cruz Mixtepec"/>
+            <StringItem index="380" value="Santa Cruz Nundaco"/>
+            <StringItem index="381" value="Santa Cruz Papalutla"/>
+            <StringItem index="382" value="Santa Cruz Tacache de Mina"/>
+            <StringItem index="383" value="Santa Cruz Tacahua"/>
+            <StringItem index="384" value="Santa Cruz Tayata"/>
+            <StringItem index="385" value="Santa Cruz Xitla"/>
+            <StringItem index="386" value="Santa Cruz Xoxocotl&#xe1;n"/>
+            <StringItem index="387" value="Santa Cruz Zenzontepec"/>
+            <StringItem index="388" value="Santa Gertrudis"/>
+            <StringItem index="389" value="Santa In&#xe9;s de Zaragoza"/>
+            <StringItem index="390" value="Santa In&#xe9;s del Monte"/>
+            <StringItem index="391" value="Santa In&#xe9;s Yatzeche"/>
+            <StringItem index="392" value="Santa Luc&#xed;a del Camino"/>
+            <StringItem index="393" value="Santa Luc&#xed;a Miahuatl&#xe1;n"/>
+            <StringItem index="394" value="Santa Luc&#xed;a Monteverde"/>
+            <StringItem index="395" value="Santa Luc&#xed;a Ocotl&#xe1;n"/>
+            <StringItem index="396" value="Santa Magdalena Jicotl&#xe1;n"/>
+            <StringItem index="397" value="Santa Mar&#xed;a Alotepec"/>
+            <StringItem index="398" value="Santa Mar&#xed;a Apazco"/>
+            <StringItem index="399" value="Santa Mar&#xed;a Atzompa"/>
+            <StringItem index="400" value="Santa Mar&#xed;a Camotl&#xe1;n"/>
+            <StringItem index="401" value="Santa Mar&#xed;a Chacho&#xe1;pam"/>
+            <StringItem index="402" value="Santa Mar&#xed;a Chilchotla"/>
+            <StringItem index="403" value="Santa Mar&#xed;a Chimalapa"/>
+            <StringItem index="404" value="Santa Mar&#xed;a Colotepec"/>
+            <StringItem index="405" value="Santa Mar&#xed;a Cortijo"/>
+            <StringItem index="406" value="Santa Mar&#xed;a Coyotepec"/>
+            <StringItem index="407" value="Santa Mar&#xed;a del Rosario"/>
+            <StringItem index="408" value="Santa Mar&#xed;a del Tule"/>
+            <StringItem index="409" value="Santa Mar&#xed;a Ecatepec"/>
+            <StringItem index="410" value="Santa Mar&#xed;a Guelac&#xe9;"/>
+            <StringItem index="411" value="Santa Mar&#xed;a Guienagati"/>
+            <StringItem index="412" value="Santa Mar&#xed;a Huatulco"/>
+            <StringItem index="413" value="Santa Mar&#xed;a Huazolotitl&#xe1;n"/>
+            <StringItem index="414" value="Santa Mar&#xed;a Ipalapa"/>
+            <StringItem index="415" value="Santa Mar&#xed;a Ixcatl&#xe1;n"/>
+            <StringItem index="416" value="Santa Mar&#xed;a Jacatepec"/>
+            <StringItem index="417" value="Santa Mar&#xed;a Jalapa del Marqu&#xe9;s"/>
+            <StringItem index="418" value="Santa Mar&#xed;a Jaltianguis"/>
+            <StringItem index="419" value="Santa Mar&#xed;a la Asunci&#xf3;n"/>
+            <StringItem index="420" value="Santa Mar&#xed;a Lachix&#xed;o"/>
+            <StringItem index="421" value="Santa Mar&#xed;a Mixtequilla"/>
+            <StringItem index="422" value="Santa Mar&#xed;a Nativitas"/>
+            <StringItem index="423" value="Santa Mar&#xed;a Nduayaco"/>
+            <StringItem index="424" value="Santa Mar&#xed;a Ozolotepec"/>
+            <StringItem index="425" value="Santa Mar&#xed;a Petapa"/>
+            <StringItem index="426" value="Santa Mar&#xed;a Pe&#xf1;oles"/>
+            <StringItem index="427" value="Santa Mar&#xed;a P&#xe1;palo"/>
+            <StringItem index="428" value="Santa Mar&#xed;a Quiegolani"/>
+            <StringItem index="429" value="Santa Mar&#xed;a Sola"/>
+            <StringItem index="430" value="Santa Mar&#xed;a Tataltepec"/>
+            <StringItem index="431" value="Santa Mar&#xed;a Tecomavaca"/>
+            <StringItem index="432" value="Santa Mar&#xed;a Temaxcalapa"/>
+            <StringItem index="433" value="Santa Mar&#xed;a Temaxcaltepec"/>
+            <StringItem index="434" value="Santa Mar&#xed;a Teopoxco"/>
+            <StringItem index="435" value="Santa Mar&#xed;a Tepantlali"/>
+            <StringItem index="436" value="Santa Mar&#xed;a Texcatitl&#xe1;n"/>
+            <StringItem index="437" value="Santa Mar&#xed;a Tlahuitoltepec"/>
+            <StringItem index="438" value="Santa Mar&#xed;a Tlalixtac"/>
+            <StringItem index="439" value="Santa Mar&#xed;a Tonameca"/>
+            <StringItem index="440" value="Santa Mar&#xed;a Totolapilla"/>
+            <StringItem index="441" value="Santa Mar&#xed;a Xadani"/>
+            <StringItem index="442" value="Santa Mar&#xed;a Yalina"/>
+            <StringItem index="443" value="Santa Mar&#xed;a Yaves&#xed;a"/>
+            <StringItem index="444" value="Santa Mar&#xed;a Yolotepec"/>
+            <StringItem index="445" value="Santa Mar&#xed;a Yosoy&#xfa;a"/>
+            <StringItem index="446" value="Santa Mar&#xed;a Yucuhiti"/>
+            <StringItem index="447" value="Santa Mar&#xed;a Zacatepec"/>
+            <StringItem index="448" value="Santa Mar&#xed;a Zaniza"/>
+            <StringItem index="449" value="Santa Mar&#xed;a Zoquitl&#xe1;n"/>
+            <StringItem index="450" value="Santiago Amoltepec"/>
+            <StringItem index="451" value="Santiago Apoala"/>
+            <StringItem index="452" value="Santiago Ap&#xf3;stol"/>
+            <StringItem index="453" value="Santiago Astata"/>
+            <StringItem index="454" value="Santiago Atitl&#xe1;n"/>
+            <StringItem index="455" value="Santiago Ayuquililla"/>
+            <StringItem index="456" value="Santiago Cacaloxtepec"/>
+            <StringItem index="457" value="Santiago Camotl&#xe1;n"/>
+            <StringItem index="458" value="Santiago Chazumba"/>
+            <StringItem index="459" value="Santiago Cho&#xe1;pam"/>
+            <StringItem index="460" value="Santiago Comaltepec"/>
+            <StringItem index="461" value="Santiago del R&#xed;o"/>
+            <StringItem index="462" value="Santiago Huajolotitl&#xe1;n"/>
+            <StringItem index="463" value="Santiago Huauclilla"/>
+            <StringItem index="464" value="Santiago Ihuitl&#xe1;n Plumas"/>
+            <StringItem index="465" value="Santiago Ixcuintepec"/>
+            <StringItem index="466" value="Santiago Ixtayutla"/>
+            <StringItem index="467" value="Santiago Jamiltepec"/>
+            <StringItem index="468" value="Santiago Jocotepec"/>
+            <StringItem index="469" value="Santiago Juxtlahuaca"/>
+            <StringItem index="470" value="Santiago Lachiguiri"/>
+            <StringItem index="471" value="Santiago Lalopa"/>
+            <StringItem index="472" value="Santiago Laollaga"/>
+            <StringItem index="473" value="Santiago Laxopa"/>
+            <StringItem index="474" value="Santiago Llano Grande"/>
+            <StringItem index="475" value="Santiago Matatl&#xe1;n"/>
+            <StringItem index="476" value="Santiago Miltepec"/>
+            <StringItem index="477" value="Santiago Minas"/>
+            <StringItem index="478" value="Santiago Nacaltepec"/>
+            <StringItem index="479" value="Santiago Nejapilla"/>
+            <StringItem index="480" value="Santiago Niltepec"/>
+            <StringItem index="481" value="Santiago Nundiche"/>
+            <StringItem index="482" value="Santiago Nuyo&#xf3;"/>
+            <StringItem index="483" value="Santiago Pinotepa Nacional"/>
+            <StringItem index="484" value="Santiago Suchilquitongo"/>
+            <StringItem index="485" value="Santiago Tamazola"/>
+            <StringItem index="486" value="Santiago Tapextla"/>
+            <StringItem index="487" value="Santiago Tenango"/>
+            <StringItem index="488" value="Santiago Tepetlapa"/>
+            <StringItem index="489" value="Santiago Tetepec"/>
+            <StringItem index="490" value="Santiago Texcalcingo"/>
+            <StringItem index="491" value="Santiago Textitl&#xe1;n"/>
+            <StringItem index="492" value="Santiago Tilantongo"/>
+            <StringItem index="493" value="Santiago Tillo"/>
+            <StringItem index="494" value="Santiago Tlazoyaltepec"/>
+            <StringItem index="495" value="Santiago Xanica"/>
+            <StringItem index="496" value="Santiago Xiacu&#xed;"/>
+            <StringItem index="497" value="Santiago Yaitepec"/>
+            <StringItem index="498" value="Santiago Yaveo"/>
+            <StringItem index="499" value="Santiago Yolom&#xe9;catl"/>
+            <StringItem index="500" value="Santiago Yosond&#xfa;a"/>
+            <StringItem index="501" value="Santiago Yucuyachi"/>
+            <StringItem index="502" value="Santiago Zacatepec"/>
+            <StringItem index="503" value="Santiago Zoochila"/>
+            <StringItem index="504" value="Santo Domingo Albarradas"/>
+            <StringItem index="505" value="Santo Domingo Armenta"/>
+            <StringItem index="506" value="Santo Domingo Chihuit&#xe1;n"/>
+            <StringItem index="507" value="Santo Domingo de Morelos"/>
+            <StringItem index="508" value="Santo Domingo Ingenio"/>
+            <StringItem index="509" value="Santo Domingo Ixcatl&#xe1;n"/>
+            <StringItem index="510" value="Santo Domingo Nuxa&#xe1;"/>
+            <StringItem index="511" value="Santo Domingo Ozolotepec"/>
+            <StringItem index="512" value="Santo Domingo Petapa"/>
+            <StringItem index="513" value="Santo Domingo Roayaga"/>
+            <StringItem index="514" value="Santo Domingo Tehuantepec"/>
+            <StringItem index="515" value="Santo Domingo Teojomulco"/>
+            <StringItem index="516" value="Santo Domingo Tepuxtepec"/>
+            <StringItem index="517" value="Santo Domingo Tlatay&#xe1;pam"/>
+            <StringItem index="518" value="Santo Domingo Tomaltepec"/>
+            <StringItem index="519" value="Santo Domingo Tonaltepec"/>
+            <StringItem index="520" value="Santo Domingo Tonal&#xe1;"/>
+            <StringItem index="521" value="Santo Domingo Xagac&#xed;a"/>
+            <StringItem index="522" value="Santo Domingo Yanhuitl&#xe1;n"/>
+            <StringItem index="523" value="Santo Domingo Yodohino"/>
+            <StringItem index="524" value="Santo Domingo Zanatepec"/>
+            <StringItem index="525" value="Santo Tom&#xe1;s Jalieza"/>
+            <StringItem index="526" value="Santo Tom&#xe1;s Mazaltepec"/>
+            <StringItem index="527" value="Santo Tom&#xe1;s Ocotepec"/>
+            <StringItem index="528" value="Santo Tom&#xe1;s Tamazulapan"/>
+            <StringItem index="529" value="Santos Reyes Nopala"/>
+            <StringItem index="530" value="Santos Reyes P&#xe1;palo"/>
+            <StringItem index="531" value="Santos Reyes Tepejillo"/>
+            <StringItem index="532" value="Santos Reyes Yucun&#xe1;"/>
+            <StringItem index="533" value="Silacayo&#xe1;pam"/>
+            <StringItem index="534" value="Sitio de Xitlapehua"/>
+            <StringItem index="535" value="Soledad Etla"/>
+            <StringItem index="536" value="Tamazul&#xe1;pam del Esp&#xed;ritu Santo"/>
+            <StringItem index="537" value="Tanetze de Zaragoza"/>
+            <StringItem index="538" value="Taniche"/>
+            <StringItem index="539" value="Tataltepec de Vald&#xe9;s"/>
+            <StringItem index="540" value="Teococuilco de Marcos P&#xe9;rez"/>
+            <StringItem index="541" value="Teotitl&#xe1;n de Flores Mag&#xf3;n"/>
+            <StringItem index="542" value="Teotitl&#xe1;n del Valle"/>
+            <StringItem index="543" value="Teotongo"/>
+            <StringItem index="544" value="Tepelmeme Villa de Morelos"/>
+            <StringItem index="545" value="Tezoatl&#xe1;n de Segura y Luna"/>
+            <StringItem index="546" value="Tlacolula de Matamoros"/>
+            <StringItem index="547" value="Tlacotepec Plumas"/>
+            <StringItem index="548" value="Tlalixtac de Cabrera"/>
+            <StringItem index="549" value="Totontepec Villa de Morelos"/>
+            <StringItem index="550" value="Trinidad Zaachila"/>
+            <StringItem index="551" value="Uni&#xf3;n Hidalgo"/>
+            <StringItem index="552" value="Valerio Trujano"/>
+            <StringItem index="553" value="Villa de Chilapa de D&#xed;az"/>
+            <StringItem index="554" value="Villa de Etla"/>
+            <StringItem index="555" value="Villa de Tamazul&#xe1;pam del Progreso"/>
+            <StringItem index="556" value="Villa de Tututepec de Melchor Ocampo"/>
+            <StringItem index="557" value="Villa de Zaachila"/>
+            <StringItem index="558" value="Villa D&#xed;az Ordaz"/>
+            <StringItem index="559" value="Villa Hidalgo"/>
+            <StringItem index="560" value="Villa Sola de Vega"/>
+            <StringItem index="561" value="Villa Talea de Castro"/>
+            <StringItem index="562" value="Villa Tej&#xfa;pam de la Uni&#xf3;n"/>
+            <StringItem index="563" value="Yaxe"/>
+            <StringItem index="564" value="Yogana"/>
+            <StringItem index="565" value="Yutanduchi de Guerrero"/>
+            <StringItem index="566" value="Zapotitl&#xe1;n Lagunas"/>
+            <StringItem index="567" value="Zapotitl&#xe1;n Palmas"/>
+            <StringItem index="568" value="Zimatl&#xe1;n de &#xc1;lvarez"/>
+            <StringItem index="569" value="&#xc1;nimas Trujano"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="iMunicipioItemStateChanged"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="iColonia">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="1">
+            <StringItem index="0" value="Abejones"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="iColoniaItemStateChanged"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>

@@ -60,7 +60,7 @@ public class BuscarCita extends javax.swing.JInternalFrame {
       iBuscarFecha.setVisible(false);
       iBuscar.setToolTipText("ingrese nombre o algun apellido a filtrar");
       iBuscarFecha.setToolTipText("ingrese una fecha valida");
-      model.add(0, "NOMBRE     APELLIDO PAT     APELLIDO MAT");
+      model.add(0, "NOMBRE DEL PACIENTE            ESTATUS");
       listaFiltro.setModel(model);
       
       this.pack();
@@ -84,9 +84,35 @@ public class BuscarCita extends javax.swing.JInternalFrame {
     }
     
     public void agregarDatosList(ArrayList<Object[]> datos){
-        String aux="";
-        for (int i=0;i<datos.size();i++) {
-            aux=(String) datos.get(i)[0]+"          "+datos.get(i)[1]+"        "+datos.get(i)[2];
+        String aux="",auxfecha="PENDIENTE";
+        java.util.Date fechaActual = new java.util.Date();
+        
+        SimpleDateFormat fecha = new SimpleDateFormat("YYYY-MM-dd");
+        SimpleDateFormat hora = new SimpleDateFormat("hh:mm");
+        System.out.println("hora actual: "+hora.format(fechaActual)+"hora b: "+hora.format(fechaActual).substring(0, 2)+" minutos b: "+hora.format(fechaActual).substring(3));
+        
+
+        for (int i = 0; i < datos.size(); i++) {
+            String fechaCita = (String) datos.get(i)[5];
+            String horaCita = (String) datos.get(i)[6];
+            System.out.println("fecha cita: "+fechaCita);
+            // nuevos
+            if (Integer.parseInt(fecha.format(fechaActual).substring(5, 7)) == Integer.parseInt(fechaCita.substring(5, 7)) && Integer.parseInt(fecha.format(fechaActual).substring(8, 10)) == Integer.parseInt(fechaCita.substring(8, 10))) {
+                if (Integer.parseInt(hora.format(fechaActual).substring(0, 2)) >= Integer.parseInt(horaCita.substring(0, 2)) && Integer.parseInt(hora.format(fechaActual).substring(3)) > Integer.parseInt(horaCita.substring(3))) {
+                    auxfecha = "RELIZADA";
+                    System.out.println("primer if");
+                }
+            }else if(Integer.parseInt(fecha.format(fechaActual).substring(5, 7)) == Integer.parseInt(fechaCita.substring(5, 7)) && Integer.parseInt(fecha.format(fechaActual).substring(8, 10)) > Integer.parseInt(fechaCita.substring(8, 10))){
+                auxfecha = "RELIZADA";    
+                    System.out.println("2 if");
+            }else if(Integer.parseInt(fecha.format(fechaActual).substring(5, 7)) > Integer.parseInt(fechaCita.substring(5, 7))){
+                auxfecha = "RELIZADA";  
+                    System.out.println("3 if");
+            }else{
+                auxfecha="PENDIENTE";
+            }
+            
+            aux = (String) datos.get(i)[0] + "   " + datos.get(i)[1] + "  " + datos.get(i)[2] + "            " + auxfecha;
             model.addElement(aux);
         }
     }
@@ -99,6 +125,7 @@ public class BuscarCita extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        iBuscarFecha = new com.toedter.calendar.JDateChooser();
         jLabel1 = new javax.swing.JLabel();
         seleccionarBusqueda = new javax.swing.JComboBox();
         bFiltrar = new javax.swing.JButton();
@@ -106,12 +133,15 @@ public class BuscarCita extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         oDetalles = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
-        iBuscarFecha = new com.toedter.calendar.JDateChooser();
         jScrollPane3 = new javax.swing.JScrollPane();
         listaFiltro = new javax.swing.JList<>();
         jLabel3 = new javax.swing.JLabel();
         bCancelarCita = new javax.swing.JButton();
         bPosponerCita = new javax.swing.JButton();
+
+        iBuscarFecha.setDate(obtenerFechaActual());
+        iBuscarFecha.setMaxSelectableDate(new java.util.Date(1546326115000L));
+        iBuscarFecha.setMinSelectableDate(new java.util.Date(1420095715000L));
 
         jLabel1.setText("Buscar por:");
 
@@ -132,6 +162,12 @@ public class BuscarCita extends javax.swing.JInternalFrame {
             }
         });
 
+        iBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                iBuscarKeyTyped(evt);
+            }
+        });
+
         oDetalles.setEditable(false);
         oDetalles.setColumns(20);
         oDetalles.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
@@ -139,10 +175,6 @@ public class BuscarCita extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(oDetalles);
 
         jLabel2.setText("Coincidencias: ");
-
-        iBuscarFecha.setDate(obtenerFechaActual());
-        iBuscarFecha.setMaxSelectableDate(new java.util.Date(1546326115000L));
-        iBuscarFecha.setMinSelectableDate(new java.util.Date(1420095715000L));
 
         listaFiltro.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         listaFiltro.setToolTipText("selecione un nombre para ver mas detalles");
@@ -175,20 +207,18 @@ public class BuscarCita extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(38, 38, 38)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel2)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
                         .addComponent(seleccionarBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(iBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(iBuscarFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(iBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(bFiltrar)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
+                        .addComponent(bFiltrar))
+                    .addComponent(jScrollPane3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -203,32 +233,27 @@ public class BuscarCita extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(52, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(seleccionarBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(seleccionarBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(15, 15, 15))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(43, 43, 43)
+                        .addGap(73, 73, 73)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(bCancelarCita)
                             .addComponent(bPosponerCita)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(iBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(iBuscarFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(iBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(14, 14, 14)
-                                .addComponent(bFiltrar)))
-                        .addGap(20, 20, 20)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(bFiltrar)
+                                    .addComponent(jLabel3))))
+                        .addGap(45, 45, 45)
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -252,7 +277,7 @@ public class BuscarCita extends javax.swing.JInternalFrame {
 
     private void clearResult(){
         model.removeAllElements();
-        model.add(0, "NOMBRE     APELLIDO PAT     APELLIDO MAT");
+        model.add(0, "NOMBRE DEL PACIENTE          ESTATUS");
         oDetalles.setText("");
         listaFiltro.setSelectedIndex(0);  
     }
@@ -262,10 +287,10 @@ public class BuscarCita extends javax.swing.JInternalFrame {
             datos = new ArrayList<>();
             clearResult();
             String buscarpor = "";
-            SimpleDateFormat fecha = new SimpleDateFormat("dd-MM-yyyy");
+            SimpleDateFormat fecha = new SimpleDateFormat("yyyy-MM-dd");
             if (seleccionarBusqueda.getSelectedIndex() == 1) {
                 buscarpor = "Select * from paciente p inner join cita c on p.id_paciente=c.id_paciente "
-                        + "where p.nombre like '%" + iBuscar.getText() + "%' or apellido_Paterno like '%" + iBuscar.getText() + "%' or apellido_materno like '%" + iBuscar.getText() + "%'";
+                        + "where p.nombre like '%" + iBuscar.getText().toUpperCase() + "%' or apellido_Paterno like '%" + iBuscar.getText().toUpperCase() + "%' or apellido_materno like '%" + iBuscar.getText().toUpperCase() + "%'";
             } else {
                 ///// METER UN IF PARA SOLO MOSTRAR CITAS FUTURAS NO PASADAS
                 buscarpor = "Select * from paciente p inner join cita c on p.id_paciente=c.id_paciente"
@@ -294,7 +319,7 @@ public class BuscarCita extends javax.swing.JInternalFrame {
 
                         dat[8] = String.valueOf(rs.getString("id_cita"));//id_cita
                         dat[9] = String.valueOf(rs.getString("id_paciente"));//id_paciente
-                        dat[11]= String.valueOf(rs.getString("email"));//id_paciente
+                        dat[10]= String.valueOf(rs.getString("email"));//id_paciente
                         datos.add(dat);
                         flag=true;
                     }
@@ -345,27 +370,28 @@ public class BuscarCita extends javax.swing.JInternalFrame {
         if (listaFiltro.getSelectedIndex() > 0) {
             if (JOptionPane.showConfirmDialog(rootPane, "¿Realmente desea cancelar la cita ?",
                     "Cancelacion de cita", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION) {
-                bFiltrarActionPerformed(evt);
                 int auxindex = listaFiltro.getSelectedIndex() - 1;
                 try {
                     Class.forName("com.mysql.jdbc.Driver");
                     Connection co = DriverManager.getConnection(url);
-                    PreparedStatement stmt = co.prepareStatement("DELETE FROM cita WHERE id_cita=" + Integer.parseInt((String) datos.get(auxindex)[8]) + " and id_paciente =" + Integer.parseInt((String) datos.get(auxindex)[9]));
+                    PreparedStatement stmt = co.prepareStatement("DELETE FROM cita WHERE id_cita=" + Integer.parseInt((String) datos.get(auxindex)[8]) + ";");
                     stmt.executeUpdate();
                     stmt.close();
                     co.close();
-                    try {
+                    /**try {
                     Socket s = new Socket("www.gmail.com", 80);
                     if (s.isConnected()) {
                         String men="Querido usuario:  "+datos.get(listaFiltro.getSelectedIndex() - 1)[0]+" "+datos.get(listaFiltro.getSelectedIndex() - 1)[1]+" "+datos.get(listaFiltro.getSelectedIndex() - 1)[2]+
                                 ".\nlamentamos informarle que su cita del dia: "+datos.get(auxindex)[5]+""
                     + "\n y hora: "+datos.get(auxindex)[6]+"a sido cancelada.\nGracias por su preferencia.";
-                        EnviarMailConfirmacion((String) datos.get(auxindex)[11],men);
+                        EnviarMailConfirmacion((String) datos.get(auxindex)[10],men);
                     }
                 } catch (IOException ex) {
                     Logger.getLogger(AgregarPaciente.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                }*/
                     JOptionPane.showMessageDialog(this, "Cita Eliminada con exito");
+                    bFiltrarActionPerformed(evt);
+                
                 } catch (ClassNotFoundException exc) {
                     exc.printStackTrace();
                 } catch (SQLException ex) {
@@ -377,40 +403,122 @@ public class BuscarCita extends javax.swing.JInternalFrame {
 
     private void bPosponerCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPosponerCitaActionPerformed
         // TODO add your handling code here:
-        if (listaFiltro.getSelectedIndex() > 0) {
+        int auxindex = listaFiltro.getSelectedIndex() - 1;
+        if (auxindex > -1) {
             System.out.println("posponer");
-            int auxindex = listaFiltro.getSelectedIndex() - 1;
-            PanelCalendarCita pc = new PanelCalendarCita(this, (String) datos.get(auxindex)[8]);
-            JDialog frame = new JDialog();
-            frame.add(pc);
-            frame.setModal(true);
-            System.out.println("posponer");
-            frame.setLocationRelativeTo(this);
+            java.util.Date fechaActual= new java.util.Date();
+            java.util.Date fechac=null;
+            String fechaCita=(String) datos.get(auxindex)[5];
+            String horaCita=(String) datos.get(auxindex)[6];
+            SimpleDateFormat fecha = new SimpleDateFormat("YYYY-MM-dd");
+            SimpleDateFormat hora = new SimpleDateFormat("hh:mm");
             
-            frame.setVisible(true);
-            pc.show();
-            frame.setEnabled(true);
-            frame.setFocusCycleRoot(true);
+            try {
+                fechac = fecha.parse(fechaCita);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            System.out.println("mes actual: "+fecha.format(fechaActual).substring(5, 7)+" dia actual: "+fecha.format(fechaActual).substring(8,10)+
+                    "\nmes cita: "+fechaCita.substring(5, 7)+" dia cita: "+fechaCita.substring(8, 10));
             
+            System.out.println("fecha actual: "+fecha.format(fechaActual)+" vs fecha de la cita: "+fecha.format(fechac));
+            if (Integer.parseInt(fecha.format(fechaActual).substring(5, 7)) < Integer.parseInt(fechaCita.substring(5, 7))) {
+                hacerPosponer(auxindex);
+            } else if (Integer.parseInt(fecha.format(fechaActual).substring(5, 7)) == Integer.parseInt(fechaCita.substring(5, 7))) {
+                if (Integer.parseInt(fecha.format(fechaActual).substring(8, 10)) < Integer.parseInt(fechaCita.substring(8, 10))) {
+                    hacerPosponer(auxindex);
+                } else if (Integer.parseInt(fecha.format(fechaActual).substring(8, 10)) == Integer.parseInt(fechaCita.substring(8, 10))) {
+                    if (Integer.parseInt(hora.format(fechaActual).substring(0, 2)) <= Integer.parseInt(horaCita.substring(0, 2)) && Integer.parseInt(hora.format(fechaActual).substring(3)) < Integer.parseInt(horaCita.substring(3))) {
+                        hacerPosponer(auxindex);
+                    } else {
+                        JOptionPane.showMessageDialog(rootPane, "La fecha de esta cita ya paso");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "La fecha de esta cita ya paso");
+                }
+            } else if (Integer.parseInt(fecha.format(fechaActual).substring(5, 7)) > Integer.parseInt(fechaCita.substring(5, 7))) {
+                JOptionPane.showMessageDialog(rootPane, "La fecha de esta cita ya paso");
+            }
         }
     }//GEN-LAST:event_bPosponerCitaActionPerformed
 
-    public void ActualizarCita(String id,String hora,Date dia){
-        try{
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection co=DriverManager.getConnection(url);
-            PreparedStatement stmt = co.prepareStatement("UPDATE  cita SET fecha_cita=?,hora_cita=? where id_cita="+id);
-            
-            stmt.setDate(1, dia);
-            stmt.setString(2, hora);
-            
-            stmt.executeUpdate();
-            
-            JOptionPane.showMessageDialog(this, "Cita Actualizada");
+    private void hacerPosponer(int auxindex){
+        PanelCalendarCita pc = new PanelCalendarCita(this, (String) datos.get(auxindex)[8]);
+                    JDialog frame = new JDialog();
+                    frame.add(pc);
+                    pc.setPanelPadre(frame);
+                    frame.setModal(true);
+                    System.out.println("posponer");
+                    frame.setLocationRelativeTo(this);
+                    frame.setSize(350, 261);
+                    frame.pack();
+
+                    frame.setVisible(true);
+                    pc.show();
+                    frame.setEnabled(true);
+                    
+
+                    System.out.println("looooooooooooooooool");
+    }
+    private void iBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_iBuscarKeyTyped
+        // TODO add your handling code here:
+         String tamanio= iBuscar.getText(); 
+        char c = evt.getKeyChar();
+        if (Character.isDigit(c) || tamanio.length()>=20) {
+            getToolkit().beep();
+            evt.consume();
+            System.out.println("ingresa solo letras");
+            // Error.setText("Ingresa Solo Letras  
         }
-        catch(ClassNotFoundException exc){
+    }//GEN-LAST:event_iBuscarKeyTyped
+
+    public void ActualizarCita(String id,String hora,java.util.Date dia,java.awt.event.ActionEvent evt){
+        try{
+            
+            int auxindex = listaFiltro.getSelectedIndex() - 1;
+            SimpleDateFormat fecha = new SimpleDateFormat("yyyy-MM-dd");
+            java.sql.Date d = new java.sql.Date(dia.getTime());
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection co = DriverManager.getConnection(url);
+            Statement stm = co.createStatement();            
+            System.out.println("entro para hacer consulta");
+            ResultSet rs = stm.executeQuery("Select * from cita "
+                    + " where fecha_cita = '" + fecha.format(dia) + "' and hora_cita = '"+ hora+"';");
+            System.out.println("hizo consulta");
+            int aux = 0;
+            while (rs.next()) {
+                aux=rs.getInt("id_cita");
+            }
+            if (aux == 0) {
+
+                co = DriverManager.getConnection(url);
+                PreparedStatement stmt = co.prepareStatement("UPDATE  cita SET fecha_cita=?,hora_cita=? where id_cita=" + id);
+
+                stmt.setDate(1, d);
+                stmt.setString(2, hora);
+                System.out.println("lol actualizo");
+                stmt.executeUpdate();
+                /**try {
+                    Socket s = new Socket("www.gmail.com", 80);
+                    if (s.isConnected()) {
+                        String men="Querido usuario:  "+datos.get(listaFiltro.getSelectedIndex() - 1)[0]+" "+datos.get(listaFiltro.getSelectedIndex() - 1)[1]+" "+datos.get(listaFiltro.getSelectedIndex() - 1)[2]+
+                                ".\nlamentamos informarle que su cita del dia: "+datos.get(auxindex)[5]+""
+                    + "\n y hora: "+datos.get(auxindex)[6]+"a sido pospuesta para el dia "+fecha.format(dia) +"y hora "+hora+".\nGracias por su preferencia.";
+                        EnviarMailConfirmacion((String) datos.get(auxindex)[10],men);
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(AgregarPaciente.class.getName()).log(Level.SEVERE, null, ex);
+                }*/
+                    JOptionPane.showMessageDialog(this, "Cita Actualizada con exito");
+                    bFiltrarActionPerformed(evt);
+                
+
+            }else{    
+                JOptionPane.showMessageDialog(this, "Hay una cita ya agendada con esa hora y fecha");
+            }
+        } catch (ClassNotFoundException exc) {
             exc.printStackTrace();
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             //Logger.getLogger(ConexionSQL.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
